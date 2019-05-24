@@ -42,9 +42,12 @@
                                 <input required type="text" {{isset($data->name)?'readonly':''}} name="name" class="form-control" id="" placeholder="Input field" value="{{isset($data->name)?$data->name:""}}">
                             </div>
                             <div class="form-group">
-                                <div>Created_at: {{isset($data->created_at)?$data->created_at:''}}</div>
-                                <div>Updated_at: {{isset($data->updated_at)?$data->updated_at:''}}</div>
-
+                                @if(isset($data->created_at))
+                                    <div>Created_at: {{isset($data->created_at)?$data->created_at:''}}</div>
+                                @endif
+                                @if(isset($data->updated_at))
+                                   <div>Updated_at: {{isset($data->updated_at)?$data->updated_at:''}}</div>
+                                @endif
                             </div>
                             <div class="row">
                                 <div class="col-6">
