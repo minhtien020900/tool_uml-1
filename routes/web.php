@@ -10,9 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', 'Plantuml\ToolController@index')->name('homepage.index');
+
 Route::prefix('plantuml')->group(function () {
     Route::get('/', 'Plantuml\ToolController@index')->name('plantuml.index');
-    Route::get('/plantuml/create', 'Plantuml\ToolController@create')->name('plantuml.create');
+    Route::get('/create', 'Plantuml\ToolController@create')->name('plantuml.create');
     Route::post('/', 'Plantuml\ToolController@store')->name('plantuml.store');
     Route::get('/show_url/{name}', 'Plantuml\ToolController@show_url')->name('plantuml.show');
     Route::get('/build/uml', 'Plantuml\ToolController@build_uml')->name('plantuml.build');

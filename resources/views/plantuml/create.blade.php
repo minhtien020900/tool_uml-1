@@ -30,9 +30,9 @@
         <div class='col-12 mt-3'>
 
             @if(!isset($data->name))
-                <form action="/" method="POST" role="form">
+                <form action="{{route('plantuml.store')}}" method="POST" role="form">
                     @else
-                        <form action="/{{$data->name}}" method="POST" role="form">
+                        <form action="{{route('plantuml.update',$data->name)}}" method="POST" role="form">
                             <input name="_method" type="hidden" value="PUT">
                             @endif
                             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}"/>
@@ -107,7 +107,7 @@
     $(".build").click(function (e) {
         e.preventDefault();
         loading('show');
-        $.get('/build/uml', {text: textarea.val()}, function (resp) {
+        $.get('{{route('plantuml.build')}}', {text: textarea.val()}, function (resp) {
             $('.preview').attr('src', resp.planttext.png)
             loading('hide');
         })
