@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Plantuml;
 use App\Entity\Plantuml;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use function Jawira\PlantUml\encodep;
 
@@ -24,6 +25,7 @@ class ToolController extends Controller {
 
     public function store(Request $request) {
         try{
+
             $name = $request->input('name');
 
             if(Plantuml::where(['name' => $name])->count() > 1){
@@ -31,8 +33,15 @@ class ToolController extends Controller {
             }
 
             $hash = encodep($request->input('code'));
-            Plantuml::firstOrCreate(['name' => $name, 'url' => $hash, 'code' => $request->input('code')]);
+            Plantuml::firstOrCreate([
+                'name' => $name,
+                'url' => $hash,
+                'code' => $request->input('code'),
+                'user_id' => Auth::id()
+            ]);
         }catch (\Exception $e){
+            echo $e->getMessage();
+            die;
             Session::flash('error', 'Code không đúng');
         }
 
