@@ -52,21 +52,26 @@ class ToolController extends Controller {
 
     public function update(Request $request) {
         $hash = encodep($request->input('code'));
-
+        /** @var Plantuml $p */
         $p = Plantuml::where(['name' => $request->input('name')])
                      ->first();
 
         $p->code = $request->input('code');
         $p->url  = $hash;
-        $p->save();
 
+        $p->save();
+        $p->getDiagramByCache();
         return redirect(route('plantuml.index'));
     }
 
     public function show_url($name) {
+        /** @var Plantuml $mm */
         $mm = (Plantuml::where(['name' => $name])
                        ->first());
         $im = $mm->getDiagramByCache();
+        if($mm->img == 'noIMG'){
+
+        }
         header('Content-Type: image/png');
 
         return response($im)->header('Content-type', 'image/png');

@@ -9,7 +9,7 @@ use function Jawira\PlantUml\encodep;
 Class Plantuml extends Model {
 
     protected $table    = 'plantuml';
-    protected $fillable = ['name', 'url', 'code', 'user_id'];
+    protected $fillable = ['name', 'url', 'code', 'user_id','img'];
 
     public function getUrlByCache() {
         return route('plantuml.show', $this->name);
@@ -33,9 +33,16 @@ Class Plantuml extends Model {
             $file_string = file_get_contents($path_file);
         } else {
             // todo: if don't exitsts get in server
-            $file_string = file_get_contents('https://www.plantuml.com/plantuml/img/' . $this->url);
-            Storage::put('' . PATH_FILE_DIAGRAM . $hash_file_img_name, $file_string);
+            $file_string = @file_get_contents('https://www.plantuml.com/plantuml/img/' . $this->url);
+            if($file_string != ""){
+                Storage::put('' . PATH_FILE_DIAGRAM . $hash_file_img_name, $file_string);
+            }else{
+                $hash_file_img_name = 'noIMG';
+                $file_string = file_get_contents(storage_path('app/imgs/none_response.png'));
+            }
         }
+        $this->img  = $hash_file_img_name;
+        $this->save();
 
         return $file_string;
     }

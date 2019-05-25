@@ -18,6 +18,7 @@ class Plantuml extends Migration
             $table->string('name')->unique();
             $table->text('code');
             $table->text('url');
+            $table->text('img')->default('');
             $table->integer('user_id');
             $table->timestamps();
         });
