@@ -13,7 +13,7 @@
 
 Route::get('/', 'Plantuml\ToolController@index')->name('homepage.index');
 
-Route::prefix('plantuml')->group(function () {
+Route::prefix('plantuml')->middleware('auth')->group(function () {
     Route::get('/', 'Plantuml\ToolController@index')->name('plantuml.index');
     Route::get('/create', 'Plantuml\ToolController@create')->name('plantuml.create');
     Route::post('/', 'Plantuml\ToolController@store')->name('plantuml.store');
@@ -25,3 +25,7 @@ Route::prefix('plantuml')->group(function () {
 
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
