@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use function Jawira\PlantUml\encodep;
 
 class ToolController extends Controller {
@@ -24,27 +25,27 @@ class ToolController extends Controller {
     }
 
     public function store(Request $request) {
-        try{
+        try {
 
             $name = $request->input('name');
 
-            if(Plantuml::where(['name' => $name])->count() > 1){
-                $name = $name."_".str_random(3);
+            if (Plantuml::where(['name' => $name])
+                        ->count() > 1) {
+                $name = $name . "_" . str_random(3);
             }
 
             $hash = encodep($request->input('code'));
             Plantuml::firstOrCreate([
-                'name' => $name,
-                'url' => $hash,
-                'code' => $request->input('code'),
+                'name'    => $name,
+                'url'     => $hash,
+                'code'    => $request->input('code'),
                 'user_id' => Auth::id()
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             echo $e->getMessage();
             die;
             Session::flash('error', 'Code không đúng');
         }
-
 
         return redirect(route('plantuml.index'));
     }
@@ -52,8 +53,8 @@ class ToolController extends Controller {
     public function update(Request $request) {
         $hash = encodep($request->input('code'));
 
-        $p       = Plantuml::where(['name' => $request->input('name')])
-                           ->first();
+        $p = Plantuml::where(['name' => $request->input('name')])
+                     ->first();
 
         $p->code = $request->input('code');
         $p->url  = $hash;
@@ -63,15 +64,12 @@ class ToolController extends Controller {
     }
 
     public function show_url($name) {
-
         $mm = (Plantuml::where(['name' => $name])
                        ->first());
-//        echo('<img src=\'https://www.plantuml.com/plantuml/img/' . $mm->url . '\'>');
-
-        //$file = public_path() . "/img/$image_name.png";
-        $im = file_get_contents('https://www.plantuml.com/plantuml/img/' . $mm->url);
+        $im = $mm->getDiagramByCache();
         header('Content-Type: image/png');
-        return response($im)->header('Content-type','image/png');
+
+        return response($im)->header('Content-type', 'image/png');
 
     }
 
@@ -103,4 +101,6 @@ class ToolController extends Controller {
 
 
     }
+
+
 }

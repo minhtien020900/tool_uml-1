@@ -1,4 +1,3 @@
-
 @extends('layouts/app')
 @section('header')
 
@@ -19,93 +18,77 @@
 
 @section('content')
 
-        <div class='container'>
-            {{Session::flash('error')}}
-            <!-- Navigation -->
-            <hr>
+    <div class='container'>
+    {{Session::flash('error')}}
+    <!-- Navigation -->
+        <hr>
 
-            <div class='row mb-3'>
-                <div class='col-12'>
-                    <a class="btn btn-primary" href="{{route('plantuml.create')}}" >Create new UML</a>
-                </div>
+        <div class='row mb-3'>
+            <div class='col-12'>
+                <a class="btn btn-primary" href="{{route('plantuml.create')}}">Create new UML</a>
             </div>
-
-
-
         </div>
-        <div class="container">
-            <div class='row'>
-                <div class='col-12'>
 
-                    <table class="table table-hover ">
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th></th>
 
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($data as $v)
+    </div>
+    <div class="container">
+        <div class='row'>
+            <div class='col-12'>
+                <table class="table table-hover ">
+                    <thead>
+                    <tr class="">
+                        <th class="text-center " style="max-width: 10px;">Id</th>
+                        <th class="text-center " style="max-width: 20px;">IMG</th>
+                        <th class="text-left ">Name</th>
+                        <th class="text-right "></th>
 
-                            <tr>
-                                <td>{{$v->id}}</td>
-                                <td>{{$v->name}} </td>
-                                {{--<td ><input value="{{$v->url}}" style="width:300px;" class="form-control"></td>--}}
-                                {{--<td ><input value="{{env('APP_URL')}}/show_url/{{$v->name}}" style="width:300px;" class="form-control"></td>--}}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($data as $v)
+                        <tr class="">
+                            <td class="text-center " style="max-width: 10px;">{{$v->id}}</td>
+                            <td class="text-center " style="max-width: 20px;">
+                                <img class="preview_img" src="{{$v->getUrlByCache()}}" style=""></td>
+                            <td class="text-left ">{{$v->name}} </td>
 
-                                <td class="text-right">
+                            <td class="text-right" >
                                     <a href="{{route('plantuml.show',$v->name)}}" target="_blank"><i class="fas fa-image"></i></a>
-                                    <a id="planteditorlink" target="_blank" href="{{route('plantuml.edit',$v->name)}}"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>
-                                    <i class="fas fa-trash-alt"></i>
-                                </td>
-                                <td class="d-none"><div id="content">
-                                        {{--<a id="plantimagelink" target="_blank" href="https://www.plantuml.com/plantuml/img/{{$v->url}}">PNG</a>&nbsp;|&nbsp;--}}
-                                        {{--<a id="plantsvglink" target="_blank" href="https://www.plantuml.com/plantuml/svg/{{$v->url}}">SVG</a>&nbsp;|&nbsp;--}}
-                                        {{--<a id="planttxtlink" target="_blank" href="https://www.plantuml.com/plantuml/txt/{{$v->url}}">TXT</a>&nbsp;|&nbsp;--}}
-
-                                    </div></td>
-                            </tr>
-                            <tr class="d-none">
-                                <td colspan="4">
-                                    <textarea class="form-control d-none">{{$v->code}}</textarea>
-
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                            <a id="planteditorlink" target="_blank" href="{{route('plantuml.edit',$v->name)}}"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>
+                            <i class="fas fa-trash-alt"></i>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-        <style type="text/css" media="screen">
-            #editor {
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
+    </div>
+    <style type="text/css" media="screen">
+        .preview_img {
+            position: relative;
+            height: 50px;
+        }
+
+        .preview_img.ihover {
+            position: absolute;
+            height: auto;
+            z-index: 12;
+        }
+    </style>
+    <!-- jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script>
+        $(".preview_img").click(function () {
+            $(this).toggleClass('ihover');
+        })
+        $(document).click(function (e) {
+            if (!$(e.target).is("img.preview_img")) {
+                $(".preview_img").removeClass('ihover');
             }
-        </style>
-        <!-- jQuery -->
-        <script src="//code.jquery.com/jquery.js"></script>
-        <!-- Bootstrap JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4/ace.js" type="text/javascript" charset="utf-8"></script>
-        <script>
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/monokai");
-            editor.session.setMode("ace/mode/javascript");
-
-
-            var textarea = $('textarea[name="code"]');
-
-            editor.getSession().on("change", function () {
-                textarea.val(editor.getSession().getValue());
-            });
-
-            $("#logout-form").submit();
-        </script>
+        })
+    </script>
 @endsection
