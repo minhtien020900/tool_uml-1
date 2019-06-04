@@ -38,6 +38,9 @@
                                 @enderror
                             </div>
                         </div>
+                        <hr>
+                        <div>username: noname@gmail.com</div>
+                        <div>password: noname@gmail.com</div>
 
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
