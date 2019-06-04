@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Plantuml extends Migration
+class Project extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class Plantuml extends Migration
      */
     public function up()
     {
-        Schema::create('plantuml', function (Blueprint $table) {
+        Schema::create('project', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->text('code');
-            $table->text('url');
-            $table->string('img')->default('');
-            $table->integer('user_id');
-            $table->integer('project_id');
+            $table->text('desc');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class Plantuml extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plantuml');
+        Schema::dropIfExists('project');
     }
 }
