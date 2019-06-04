@@ -17,6 +17,10 @@ Class Plantuml extends Model {
 
     }
 
+    public function project(){
+        return $this->belongsTo('App\Entity\Project', 'project_id','id');
+    }
+
     /**
      * Lấy source file img từ cache nếu ko có thì lấy trên server về
      *

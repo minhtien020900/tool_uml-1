@@ -53,7 +53,7 @@
                             <td class="text-left ">{{$v->name}} </td>
 
                             <td class="text-right" >
-                                    <a href="{{route('plantuml.show',$v->name)}}" target="_blank"><i class="fas fa-image"></i></a>
+                                    <a href="{{route('plantuml.show',(!isset($v->project->name)?$v->name:$v->project->name."/".$v->name))}}" target="_blank"><i class="fas fa-image"></i></a>
                             <a id="planteditorlink" target="_blank" href="{{route('plantuml.edit',$v->name)}}"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>
                             <i class="fas fa-trash-alt"></i>
                             </td>

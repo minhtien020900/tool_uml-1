@@ -17,15 +17,17 @@ Route::prefix('plantuml')->middleware('auth')->group(function () {
     Route::get('/', 'Plantuml\ToolController@index')->name('plantuml.index');
     Route::get('/create', 'Plantuml\ToolController@create')->name('plantuml.create');
     Route::post('/', 'Plantuml\ToolController@store')->name('plantuml.store');
-    Route::get('/show_url/{name}', 'Plantuml\ToolController@show_url')->name('plantuml.show');
+
     Route::get('/build/uml', 'Plantuml\ToolController@build_uml')->name('plantuml.build');
     Route::get('/edit/{name}', 'Plantuml\ToolController@edit')->name('plantuml.edit');
     Route::put('/{name}', 'Plantuml\ToolController@update')->name('plantuml.update');
 });
 
-
-
+Route::prefix('plantuml')->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/show_url/{project}/{name}', 'Plantuml\ToolController@show_url')->name('plantuml.show');
+    Route::get('/show_url/{name}', 'Plantuml\ToolController@show_url')->name('plantuml.show');
+});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');

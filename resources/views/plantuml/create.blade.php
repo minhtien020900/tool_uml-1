@@ -22,25 +22,50 @@
     <div class='container'>
         <div class='row'>
             <div class='col-12 mt-3'>
-
-                @if(!isset($data->name))
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if(!isset($name))
                     <form action="{{route('plantuml.store')}}" method="POST" role="form">
-                        @else
-                            <form action="{{route('plantuml.update',$data->name)}}" method="POST" role="form">
-                                <input name="_method" type="hidden" value="PUT">
-                                @endif
+                @else
+                    <form action="{{route('plantuml.update',$name)}}" method="POST" role="form">
+                        <input name="_method" type="hidden" value="PUT">
+                @endif
                                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}"/>
 
                                 <div class="form-group">
                                     <label for="">Name diagram</label>
-                                    <input required type="text" {{isset($data->name)?'readonly':''}} name="name" class="form-control" id="" placeholder="Input field" value="{{isset($data->name)?$data->name:""}}">
+                                    {{--required--}}
+                                    <input type="text" {{isset($name)?'readonly':''}} name="name" class="form-control" id="" placeholder="Input field" value="{{old('name',$name??"")}}">
                                 </div>
                                 <div class="form-group">
-                                    @if(isset($data->created_at))
-                                        <div>Created_at: {{isset($data->created_at)?$data->created_at:''}}</div>
+                                    <label for="">Project</label>
+                                </div>
+                                <div class="form-group">
+
+                                    <select class="form-control" name="project">
+                                        <option disabled>==Project==</option>
+                                        @foreach(($projects??[]) as $value)
+                                        <option value="{{$value['id']}}" {{ ($value['id'] == (old('project',$project_id)??'')) ? 'selected' : '' }}>{{($value['name'])}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for=""></label>
+                                </div>
+
+                                <div class="form-group">
+                                    @if(isset($created_at))
+                                        <div>Created_at: {{isset($created_at)?$created_at:''}}</div>
                                     @endif
-                                    @if(isset($data->updated_at))
-                                        <div>Updated_at: {{isset($data->updated_at)?$data->updated_at:''}}</div>
+                                    @if(isset($updated_at))
+                                        <div>Updated_at: {{isset($updated_at)?$updated_at:''}}</div>
                                     @endif
                                 </div>
                                 <div class="row">
@@ -48,9 +73,9 @@
                                         <div class="form-group">
                                             <label for="">Code diagram</label>
                                             <div style="position:relative;height:500px;">
-                                                <div id="editor">{{isset($data->code)?$data->code:""}}</div>
+                                                <div id="editor">{{old('code',$code??"")}}</div>
                                             </div>
-                                            <textarea name="code" class="d-none">{{isset($data->code)?$data->code:""}}</textarea>
+                                            <textarea name="code" class="d-none">{{old('code',$code??"")}}</textarea>
                                             <button class="btn btn-success build">Preview img</button>
                                             <i id="icon-loading" class="fas fa-spinner  fa-spin d-none"></i>
                                             <button type="submit" class="btn btn-primary">Save diagram</button>
@@ -58,8 +83,8 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            @if(isset($data->code)?true:false)
-                                                <img class="preview" src="https://www.plantuml.com/plantuml/img/{{isset($data->url)?$data->url:""}}">
+                                            @if(isset($code)?true:false)
+                                                <img class="preview" src="https://www.plantuml.com/plantuml/img/{{isset($url)?$url:""}}">
                                             @else
                                                 <img class="preview" src="http://placehold.it/200x200">
                                             @endif
