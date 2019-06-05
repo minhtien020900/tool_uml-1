@@ -74,6 +74,7 @@
             position: absolute;
             height: auto;
             z-index: 12;
+            max-width:fit-content !important;
         }
     </style>
     <!-- jQuery -->
