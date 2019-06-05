@@ -52,7 +52,7 @@
                                     <select class="form-control" name="project">
                                         <option disabled>==Project==</option>
                                         @foreach(($projects??[]) as $value)
-                                        <option value="{{$value['id']}}" {{ ($value['id'] == (old('project',$project_id)??'')) ? 'selected' : '' }}>{{($value['name'])}}</option>
+                                        <option value="{{$value['id']}}" {{ ($value['id'] == (old('project',($project_id ?? "") )??'')) ? 'selected' : '' }}>{{($value['name'])}}</option>
                                         @endforeach
                                     </select>
                                 </div>

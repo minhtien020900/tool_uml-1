@@ -48,8 +48,8 @@
                     @foreach($data as $v)
                         <tr class="">
                             <td class="text-center " style="max-width: 10px;">{{$v->id}}</td>
-                            <td class="text-center " style="max-width: 20px;">
-                                <img class="preview_img" src="{{$v->getUrlByCache()}}" style=""></td>
+                            <td class="text-center " style="max-width: 75px;">
+                                <img style="max-width: 70px;" class="preview_img" src="{{$v->getUrlByCache()}}" style=""></td>
                             <td class="text-left ">{{$v->name}} </td>
 
                             <td class="text-right" >
