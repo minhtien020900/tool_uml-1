@@ -12,7 +12,13 @@
 */
 
 Route::get('/', 'Plantuml\ToolController@index')->name('homepage.index');
+Route::get('/home', 'Plantuml\ToolController@index')->name('homepage.h');
 
+Route::prefix('plantuml')->group(function () {
+    //Route::get('/show_url/{project}/{name}.{type}', 'Plantuml\ToolController@show_url')->name('plantuml.show');
+    Route::get('/show_url/{project}/{name}', 'Plantuml\ToolController@show_url')->name('plantuml.show');
+    Route::get('/show_url/{name}', 'Plantuml\ToolController@show_url')->name('plantuml.show');
+});
 Route::prefix('plantuml')->middleware('auth')->group(function () {
     Route::get('/', 'Plantuml\ToolController@index')->name('plantuml.index');
     Route::get('/create', 'Plantuml\ToolController@create')->name('plantuml.create');
@@ -23,11 +29,7 @@ Route::prefix('plantuml')->middleware('auth')->group(function () {
     Route::put('/{name}', 'Plantuml\ToolController@update')->name('plantuml.update');
 });
 
-Route::prefix('plantuml')->group(function () {
-    Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/show_url/{project}/{name}', 'Plantuml\ToolController@show_url')->name('plantuml.show');
-    Route::get('/show_url/{name}', 'Plantuml\ToolController@show_url')->name('plantuml.show');
-});
+
 
 Auth::routes();
 
