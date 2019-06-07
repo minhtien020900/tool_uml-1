@@ -98,23 +98,39 @@ class ToolController extends Controller {
         return redirect(route('plantuml.index'));
     }
 
-    public function show_url($project, $name = null) {
-        if ($name == null) {
-            $name = $project;
+    public function show_url($project, $name = null, $type = null) {
+        try{
+            if ($name == null) {
+                $name = $project;
+            }
+            preg_match('/^(.+)\..+$/', $name, $match);
+            $real_name = $match[1]??$name;
+            /** @var Plantuml $mm */
+            $plantuml_element = (Plantuml::where(['name' => $real_name])
+                                         ->first());
+            if ($plantuml_element == null) {
+                throw new \Exception('ádf');
+            }
+            //<editor-fold desc="Show by type">
+            preg_match("/\.(png|svg|gif|jpg)$/", $name, $match);
+            $ext_name = $match[1] ?? '';
+            switch ($ext_name) {
+                case 'svg':
+                    $im = file_get_contents('https://www.plantuml.com/plantuml/svg/' . $plantuml_element->url);
+                    return response($im)->header('Content-type', 'image/svg+xml');
+                break;
+                case 'png':
+                case 'jpg':
+                default:
+                    $im = $plantuml_element->getDiagramByCache();
+                    return response($im)->header('Content-type', 'image/png');
+                break;
+            }
+            //</editor-fold>
+        }catch (\Exception $e){
+            $im = file_get_contents(storage_path('app\imgs\none_response.png'));
+            return response($im)->header('Content-type', 'image/png');
         }
-
-        /** @var Plantuml $mm */
-        $mm = (Plantuml::where(['name' => $name])
-                       ->first());
-
-        $im = $mm->getDiagramByCache();
-        if ($mm->img == 'noIMG') {
-
-        }
-        header('Content-Type: image/png');
-
-        return response($im)->header('Content-type', 'image/png');
-
     }
 
     public function edit($name) {

@@ -49,13 +49,16 @@
                         <tr class="">
                             <td class="text-center " style="max-width: 10px;">{{$v->id}}</td>
                             <td class="text-center " style="max-width: 75px;">
-                                <img style="max-width: 70px;" class="preview_img" src="{{$v->getUrlByCache()}}" style=""></td>
+                                <img style="max-width: 70px;" class="preview_img" src="{{$v->getUrlByCache()}}.png" type="image/svg+xml">
+                            </td>
                             <td class="text-left ">{{$v->name}} </td>
 
-                            <td class="text-right" >
-                                    <a href="{{route('plantuml.show',(!isset($v->project->name)?$v->name:$v->project->name."/".$v->name))}}" target="_blank"><i class="fas fa-image"></i></a>
-                            <a id="planteditorlink" target="_blank" href="{{route('plantuml.edit',$v->name)}}"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>
-                            <i class="fas fa-trash-alt"></i>
+                            <td class="text-right">
+                                <a href="{{route('plantuml.show',(!isset($v->project->name)?$v->name:$v->project->name."/".$v->name.'.svg'))}}" target="_blank">SVG</a>
+
+                                <a href="{{route('plantuml.show',(!isset($v->project->name)?$v->name:$v->project->name."/".$v->name.'.png'))}}" target="_blank">PNG</a>
+                                <a id="planteditorlink" target="_blank" href="{{route('plantuml.edit',$v->name)}}"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>
+                                <i class="fas fa-trash-alt"></i>
                             </td>
                         </tr>
                     @endforeach
@@ -74,7 +77,7 @@
             position: absolute;
             height: auto;
             z-index: 12;
-            max-width:fit-content !important;
+            max-width: fit-content !important;
         }
     </style>
     <!-- jQuery -->
