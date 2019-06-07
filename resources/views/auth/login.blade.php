@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="text-center">
+                        <div class="text-center d-none">
                             <div>username: noname@gmail.com</div>
                             <div>password: noname@gmail.com</div>
                         </div>
