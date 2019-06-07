@@ -20,6 +20,8 @@ Route::prefix('plantuml')->group(function () {
     Route::get('/show_url/{name}', 'Plantuml\ToolController@show_url')->name('plantuml.show');
 });
 Route::prefix('plantuml')->middleware('auth')->group(function () {
+
+    Route::get('project/{name}', 'Plantuml\ToolController@showproject')->name('project.show');
     Route::get('/', 'Plantuml\ToolController@index')->name('plantuml.index');
     Route::get('/create', 'Plantuml\ToolController@create')->name('plantuml.create');
     Route::post('/', 'Plantuml\ToolController@store')->name('plantuml.store');
@@ -29,6 +31,9 @@ Route::prefix('plantuml')->middleware('auth')->group(function () {
     Route::put('/{name}', 'Plantuml\ToolController@update')->name('plantuml.update');
 });
 
+Route::get('/404', function(){
+    return view('404');
+})->name('404');
 
 
 Auth::routes();

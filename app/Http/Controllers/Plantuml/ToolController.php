@@ -10,12 +10,31 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 use function Jawira\PlantUml\encodep;
 
 class ToolController extends Controller {
 
-    public function index() {
-        $puml = Plantuml::all();
+    public function __construct() {
+        //parent::__construct();
+        $projects = Project::all();
+        View::share('projects', $projects);
+    }
+
+
+    public function index(Request $request) {
+
+        $puml = Plantuml::where('active', 1);
+
+        //<editor-fold desc="Order by">
+        $puml = $this->order_by_uml($request, $puml);
+        //</editor-fold>
+
+        //<editor-fold desc="Order by">
+        $puml = $this->filter_uml($request, $puml);
+        //</editor-fold>
+
+        $puml = $puml->get();
 
         return view('plantuml/list', ['data' => $puml]);
     }
@@ -99,12 +118,12 @@ class ToolController extends Controller {
     }
 
     public function show_url($project, $name = null, $type = null) {
-        try{
+        try {
             if ($name == null) {
                 $name = $project;
             }
             preg_match('/^(.+)\..+$/', $name, $match);
-            $real_name = $match[1]??$name;
+            $real_name = $match[1] ?? $name;
             /** @var Plantuml $mm */
             $plantuml_element = (Plantuml::where(['name' => $real_name])
                                          ->first());
@@ -117,18 +136,21 @@ class ToolController extends Controller {
             switch ($ext_name) {
                 case 'svg':
                     $im = file_get_contents('https://www.plantuml.com/plantuml/svg/' . $plantuml_element->url);
+
                     return response($im)->header('Content-type', 'image/svg+xml');
                 break;
                 case 'png':
                 case 'jpg':
                 default:
                     $im = $plantuml_element->getDiagramByCache();
+
                     return response($im)->header('Content-type', 'image/png');
                 break;
             }
             //</editor-fold>
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $im = file_get_contents(storage_path('app\imgs\none_response.png'));
+
             return response($im)->header('Content-type', 'image/png');
         }
     }
@@ -163,5 +185,64 @@ class ToolController extends Controller {
 
     }
 
+    private function order_by_uml($request, $puml) {
+        if (Session::get('last_sort') != $request->input('sortby')) {
+            $type_order = 'desc';
+        } else {
+            $type_order = 'asc';
+        }
+        $sort_by = $request->input('sortby');
+        switch ($sort_by) {
+            case 'project';
+                $puml->orderBy('project_id', $type_order);
+            break;
+            case 'id';
+                $puml->orderBy('id', $type_order);
+            break;
+            case 'name';
+                $puml->orderBy('name', $type_order);
+            break;
+            case 'user';
+                $puml->orderBy('user_id', $type_order);
+            break;
+        }
+        Session::put('last_sort', $request->input('sortby'));
+
+        return $puml;
+    }
+
+    private function filter_uml(Request $request, $puml) {
+        if ($request->input('project') != null) {
+            $puml->where('project_id', $request->input('project'));
+        }
+
+        return $puml;
+    }
+
+    public function showproject(Request $request, $name) {
+        try{
+            throw new \Exception('adfasdf');
+            $p = Project::where('name', $name)
+                        ->first();
+
+            $puml = Plantuml::where('active', 1);
+
+            //<editor-fold desc="Order by">
+            $puml = $this->order_by_uml($request, $puml);
+            //</editor-fold>
+
+            //<editor-fold desc="Order by">
+            $puml->where('project_id', $p->id);
+            //</editor-fold>
+
+            $puml = $puml->get();
+
+            return view('plantuml/list', ['data' => $puml]);
+        }catch (\Exception $e){
+            return redirect(route('404'))->with('error',$e->getMessage());
+        }
+
+
+    }
 
 }

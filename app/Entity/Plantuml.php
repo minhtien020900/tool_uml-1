@@ -10,17 +10,18 @@ Class Plantuml extends Model {
 
     protected $table    = 'plantuml';
     protected $fillable = ['name', 'url', 'code', 'user_id','img'];
+    //protected $with = ['project'];
 
     public function getUrlByCache() {
         return route('plantuml.show', $this->name);
-
-
     }
 
     public function project(){
         return $this->belongsTo('App\Entity\Project', 'project_id','id');
     }
-
+    public function user(){
+        return $this->belongsTo('App\User', 'user_id','id');
+    }
     /**
      * Lấy source file img từ cache nếu ko có thì lấy trên server về
      *

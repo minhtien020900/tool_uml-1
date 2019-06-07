@@ -29,6 +29,11 @@
             </div>
         </div>
 
+        <div class="mb-3"><h2> Danh sách dự án </h2>
+            @foreach($projects as $p)
+                <a href="{{route('project.show',$p->name)}}" class="btn btn-dark">{{$p->name}}</a>
+            @endforeach
+        </div>
 
     </div>
     <div class="container">
@@ -37,11 +42,12 @@
                 <table class="table table-hover ">
                     <thead>
                     <tr class="">
-                        <th class="text-center " style="max-width: 10px;">Id</th>
-                        <th class="text-center " style="max-width: 20px;">IMG</th>
-                        <th class="text-left ">Name</th>
+                        <th class="text-center " style="max-width: 10px;"><a href="?sortby=id">Id</a></th>
+                        <th class="text-center " style="max-width: 20px;"><a href="#">IMG</a></th>
+                        <th class="text-left "><a href="?sortby=project">Project</a></th>
+                        <th class="text-left "><a href="?sortby=name">Name</a></th>
+                        <th class="text-left "><a href="?sortby=user">User</a></th>
                         <th class="text-right "></th>
-
                     </tr>
                     </thead>
                     <tbody>
@@ -51,7 +57,9 @@
                             <td class="text-center " style="max-width: 75px;">
                                 <img style="max-width: 70px;" class="preview_img" src="{{$v->getUrlByCache()}}.png" type="image/svg+xml">
                             </td>
+                            <td class="text-left ">{{$v->project->name??''}} </td>
                             <td class="text-left ">{{$v->name}} </td>
+                            <td class="text-left ">{{$v->user->name??''}} </td>
 
                             <td class="text-right">
                                 <a href="{{route('plantuml.show',(!isset($v->project->name)?$v->name:$v->project->name."/".$v->name.'.svg'))}}" target="_blank">SVG</a>
