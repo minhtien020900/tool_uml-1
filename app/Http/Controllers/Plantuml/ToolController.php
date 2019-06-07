@@ -221,7 +221,6 @@ class ToolController extends Controller {
 
     public function showproject(Request $request, $name) {
         try{
-            throw new \Exception('adfasdf');
             $p = Project::where('name', $name)
                         ->first();
 
