@@ -66,13 +66,16 @@ class ToolController extends Controller {
 
             $hash = encodep($request->input('code'));
 
-            Plantuml::firstOrCreate([
+            $p = Plantuml::firstOrCreate([
                 'name'       => $name,
                 'url'        => $hash,
                 'code'       => $request->input('code'),
-                'project_id' => $request->input('project'),
+                'project_id' => (int)$request->input('project'),
                 'user_id'    => Auth::id()
             ]);
+            $p->project_id =(int)$request->input('project');
+            $p->save();
+
         } catch (\Exception $e) {
             echo $e->getMessage();
             die;
@@ -220,7 +223,7 @@ class ToolController extends Controller {
     }
 
     public function showproject(Request $request, $name) {
-        try{
+        try {
             $p = Project::where('name', $name)
                         ->first();
 
@@ -237,8 +240,8 @@ class ToolController extends Controller {
             $puml = $puml->get();
 
             return view('plantuml/list', ['data' => $puml]);
-        }catch (\Exception $e){
-            return redirect(route('404'))->with('error',$e->getMessage());
+        } catch (\Exception $e) {
+            return redirect(route('404'))->with('error', $e->getMessage());
         }
 
 
