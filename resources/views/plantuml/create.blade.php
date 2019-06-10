@@ -38,7 +38,6 @@
                         <input name="_method" type="hidden" value="PUT">
                 @endif
                                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}"/>
-
                                 <div class="form-group">
                                     <label for="">Name diagram</label>
                                     {{--required--}}
@@ -78,7 +77,7 @@
                                             <div class="mt-3">
                                                 <button class="btn btn-success build">Preview img</button>
                                                 <i id="icon-loading" class="fas fa-spinner  fa-spin d-none"></i>
-                                                @if($uml->user_id == Auth::id())
+                                                @if(Route::currentRouteName() == 'plantuml.create' || $uml->user_id == Auth::id() )
                                                     <button type="submit" class="btn btn-primary">Save diagram</button>
                                                 @endif</div>
                                         </div>
