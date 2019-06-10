@@ -48,14 +48,12 @@ class ToolController extends Controller {
     }
 
     public function store(Request $request) {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'name' => 'required',
             'code' => 'required',
         ]);
+
         try {
-            if ($validator->failed()) {
-                throw new \Exception('validate');
-            }
 
             $name = $request->input('name');
 
@@ -102,12 +100,17 @@ class ToolController extends Controller {
             /** @var Plantuml $p */
             $p = Plantuml::where(['name' => $request->input('name')])
                          ->first();
+            if($p->user_id == Auth::id()){
+                $p->code       = $request->input('code');
+                $p->url        = $hash;
+                $p->project_id = $request->input('project');
 
-            $p->code       = $request->input('code');
-            $p->url        = $hash;
-            $p->project_id = $request->input('project');
+                $p->save();
+            }else{
+                $validator->getMessageBag()->add('authen','Don\'t have permission');
+                throw new \Exception('Don\'t have permission');
+            }
 
-            $p->save();
 
         } catch (\Exception $e) {
             return redirect(route('plantuml.edit', $request->input('name')))
@@ -164,7 +167,8 @@ class ToolController extends Controller {
                                    ->first());
         $mm['projects'] = Project::all();
 
-        return view('plantuml/create', $mm);
+        //dd($mm->user->name);
+        return view('plantuml/create', ['uml'=>$mm]);
     }
 
     public function build_uml(Request $request) {
@@ -186,40 +190,6 @@ class ToolController extends Controller {
         ];
 
 
-    }
-
-    private function order_by_uml($request, $puml) {
-        if (Session::get('last_sort') != $request->input('sortby')) {
-            $type_order = 'desc';
-        } else {
-            $type_order = 'asc';
-        }
-        $sort_by = $request->input('sortby');
-        switch ($sort_by) {
-            case 'project';
-                $puml->orderBy('project_id', $type_order);
-            break;
-            case 'id';
-                $puml->orderBy('id', $type_order);
-            break;
-            case 'name';
-                $puml->orderBy('name', $type_order);
-            break;
-            case 'user';
-                $puml->orderBy('user_id', $type_order);
-            break;
-        }
-        Session::put('last_sort', $request->input('sortby'));
-
-        return $puml;
-    }
-
-    private function filter_uml(Request $request, $puml) {
-        if ($request->input('project') != null) {
-            $puml->where('project_id', $request->input('project'));
-        }
-
-        return $puml;
     }
 
     public function showproject(Request $request, $name) {

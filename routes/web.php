@@ -29,6 +29,7 @@ Route::prefix('plantuml')->middleware('auth')->group(function () {
     Route::get('/build/uml', 'Plantuml\ToolController@build_uml')->name('plantuml.build');
     Route::get('/edit/{name}', 'Plantuml\ToolController@edit')->name('plantuml.edit');
     Route::put('/{name}', 'Plantuml\ToolController@update')->name('plantuml.update');
+    Route::get('/byuser', 'Plantuml\UserumlController@index')->name('plantuml.byuser');
 });
 
 Route::get('/404', function(){

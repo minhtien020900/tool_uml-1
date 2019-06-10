@@ -22,18 +22,20 @@
     {{Session::flash('error')}}
     <!-- Navigation -->
         <hr>
-
-        <div class='row mb-3'>
+        <h1>{{$name_page??'UML'}}</h1>
+        <div class='row mb-3 d-none'>
             <div class='col-12'>
                 <a class="btn btn-primary" href="{{route('plantuml.create')}}">Create new UML</a>
             </div>
         </div>
 
+        @if(Route::current()->getName()!= 'plantuml.byuser')
         <div class="mb-3"><h2> Danh sách dự án </h2>
             @foreach($projects as $p)
                 <a href="{{route('project.show',$p->name)}}" class="btn btn-dark">{{$p->name}}</a>
             @endforeach
         </div>
+        @endif
 
     </div>
     <div class="container">
@@ -65,8 +67,13 @@
                                 <a href="{{route('plantuml.show',(!isset($v->project->name)?$v->name:$v->project->name."/".$v->name.'.svg'))}}" target="_blank">SVG</a>
 
                                 <a href="{{route('plantuml.show',(!isset($v->project->name)?$v->name:$v->project->name."/".$v->name.'.png'))}}" target="_blank">PNG</a>
+                                @if($v->user_id == Auth::id())
                                 <a id="planteditorlink" target="_blank" href="{{route('plantuml.edit',$v->name)}}"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>
+
                                 <i class="fas fa-trash-alt"></i>
+                                    @else
+                                    <a id="planteditorlink" target="_blank" href="{{route('plantuml.edit',$v->name)}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

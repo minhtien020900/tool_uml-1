@@ -31,10 +31,10 @@
                         </ul>
                     </div>
                 @endif
-                @if(!isset($name))
+                @if(!isset($uml->name))
                     <form action="{{route('plantuml.store')}}" method="POST" role="form">
                 @else
-                    <form action="{{route('plantuml.update',$name)}}" method="POST" role="form">
+                    <form action="{{route('plantuml.update',$uml->name)}}" method="POST" role="form">
                         <input name="_method" type="hidden" value="PUT">
                 @endif
                                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}"/>
@@ -42,7 +42,7 @@
                                 <div class="form-group">
                                     <label for="">Name diagram</label>
                                     {{--required--}}
-                                    <input type="text" {{isset($name)?'readonly':''}} name="name" class="form-control" id="" placeholder="Input field" value="{{old('name',$name??"")}}">
+                                    <input type="text" {{isset($uml->name)?'readonly':''}} name="name" class="form-control" id="" placeholder="Input field" value="{{old('name',$uml->name??"")}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Project</label>
@@ -51,40 +51,42 @@
 
                                     <select class="form-control" name="project">
                                         <option disabled>==Project==</option>
-                                        @foreach(($projects??[]) as $value)
-                                        <option value="{{$value['id']}}" {{ ($value['id'] == (old('project',($project_id ?? "") )??'')) ? 'selected' : '' }}>{{($value['name'])}}</option>
+                                        @foreach(($uml->projects??[]) as $value)
+                                        <option value="{{$value['id']}}" {{ ($value['id'] == (old('project',($uml->project_id ?? "") )??'')) ? 'selected' : '' }}>{{($value['name'])}}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for=""></label>
+
+                        <div class="form-group">
+                        @if(isset($uml->created_at))
+                                <div><strong>Author</strong>: {{$uml->user->name}}</div>
+                                <div><strong>Created_at:</strong> {{isset($uml->created_at)?$uml->created_at:''}}</div>
+                                    @endif
+                                    @if(isset($uml->updated_at))
+                                            <div><strong>Updated_at:</strong> {{isset($uml->updated_at)?$uml->updated_at:''}}</div>
+                                    @endif
                                 </div>
 
-                                <div class="form-group">
-                                    @if(isset($created_at))
-                                        <div>Created_at: {{isset($created_at)?$created_at:''}}</div>
-                                    @endif
-                                    @if(isset($updated_at))
-                                        <div>Updated_at: {{isset($updated_at)?$updated_at:''}}</div>
-                                    @endif
-                                </div>
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="">Code diagram</label>
                                             <div style="position:relative;height:500px;">
-                                                <div id="editor">{{old('code',$code??"")}}</div>
+                                                <div id="editor">{{old('code',$uml->code??"")}}</div>
                                             </div>
-                                            <textarea name="code" class="d-none">{{old('code',$code??"")}}</textarea>
-                                            <button class="btn btn-success build">Preview img</button>
-                                            <i id="icon-loading" class="fas fa-spinner  fa-spin d-none"></i>
-                                            <button type="submit" class="btn btn-primary">Save diagram</button>
+                                            <textarea name="code" class="d-none">{{old('code',$uml->code??"")}}</textarea>
+                                            <div class="mt-3">
+                                                <button class="btn btn-success build">Preview img</button>
+                                                <i id="icon-loading" class="fas fa-spinner  fa-spin d-none"></i>
+                                                @if($uml->user_id == Auth::id())
+                                                    <button type="submit" class="btn btn-primary">Save diagram</button>
+                                                @endif</div>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            @if(isset($code)?true:false)
-                                                <img class="preview" src="https://www.plantuml.com/plantuml/img/{{isset($url)?$url:""}}">
+                                            @if(isset($uml->code)?true:false)
+                                                <img class="preview" src="https://www.plantuml.com/plantuml/img/{{isset($uml->url)?$uml->url:""}}">
                                             @else
                                                 <img class="preview" src="http://placehold.it/200x200">
                                             @endif
