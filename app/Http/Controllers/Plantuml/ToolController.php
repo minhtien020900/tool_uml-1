@@ -40,11 +40,9 @@ class ToolController extends Controller {
     }
 
     public function create() {
-        $puml             = Plantuml::all();
-        $projects         = (Project::all());
-        $puml['projects'] = $projects;
+        $puml             = null;
 
-        return view('plantuml/create', $puml);
+        return view('plantuml/create', ['uml' => $puml]);
     }
 
     public function store(Request $request) {
@@ -64,14 +62,14 @@ class ToolController extends Controller {
 
             $hash = encodep($request->input('code'));
 
-            $p = Plantuml::firstOrCreate([
+            $p             = Plantuml::firstOrCreate([
                 'name'       => $name,
                 'url'        => $hash,
                 'code'       => $request->input('code'),
-                'project_id' => (int)$request->input('project'),
+                'project_id' => (int) $request->input('project'),
                 'user_id'    => Auth::id()
             ]);
-            $p->project_id =(int)$request->input('project');
+            $p->project_id = (int) $request->input('project');
             $p->save();
 
         } catch (\Exception $e) {
@@ -100,14 +98,15 @@ class ToolController extends Controller {
             /** @var Plantuml $p */
             $p = Plantuml::where(['name' => $request->input('name')])
                          ->first();
-            if($p->user_id == Auth::id()){
+            if ($p->user_id == Auth::id()) {
                 $p->code       = $request->input('code');
                 $p->url        = $hash;
                 $p->project_id = $request->input('project');
 
                 $p->save();
-            }else{
-                $validator->getMessageBag()->add('authen','Don\'t have permission');
+            } else {
+                $validator->getMessageBag()
+                          ->add('authen', 'Don\'t have permission');
                 throw new \Exception('Don\'t have permission');
             }
 
@@ -168,7 +167,7 @@ class ToolController extends Controller {
         $mm['projects'] = Project::all();
 
         //dd($mm->user->name);
-        return view('plantuml/create', ['uml'=>$mm]);
+        return view('plantuml/create', ['uml' => $mm]);
     }
 
     public function build_uml(Request $request) {

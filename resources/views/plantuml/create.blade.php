@@ -49,8 +49,9 @@
                                 <div class="form-group">
 
                                     <select class="form-control" name="project">
+
                                         <option disabled>==Project==</option>
-                                        @foreach(($uml->projects??[]) as $value)
+                                        @foreach(($projects??[]) as $value)
                                         <option value="{{$value['id']}}" {{ ($value['id'] == (old('project',($uml->project_id ?? "") )??'')) ? 'selected' : '' }}>{{($value['name'])}}</option>
                                         @endforeach
                                     </select>
