@@ -99,7 +99,6 @@
         }
         .preview_img.ihover {
             position: absolute;
-            top:0px;
             height: auto;
             z-index: 12;
             max-width: fit-content !important;
