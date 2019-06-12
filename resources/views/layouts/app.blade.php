@@ -16,7 +16,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <link href="/lib/fontawesome/css/all.min.css" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('header')
@@ -81,5 +81,7 @@
             @yield('content')
         </main>
     </div>
+
+    <div class="text-center mt-2 mb-5" style="color:#ccc">Copyright © 2019 Team Chí.  All Rights Reserved. </div>
 </body>
 </html>

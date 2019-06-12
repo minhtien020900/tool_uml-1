@@ -9,12 +9,12 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{route('plantuml.index')}}">Trang chủ
+                    <a class="nav-link" href="{{route('plantuml.index')}}"><i class="fa fa-home"></i> Homepage
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('plantuml.create')}}">Tạo UML</a>
+                    <a class="nav-link" href="{{route('plantuml.create')}}"><i class="fa fa-plus-circle"></i> Create UML</a>
                 </li>
                 <li class="nav-item d-none">
                     <a class="nav-link" href="#">Services</a>
@@ -24,10 +24,10 @@
                 </li>
                 @guest
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    <a class="nav-link" href="{{ route('login') }}"><i class="fa fa-sign-in-alt"></i>  {{ __('Login') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    <a class="nav-link" href="{{ route('register') }}"><i class="fa fa-registered"></i> {{ __('Register') }}</a>
                 </li>
                 @else
                     <li class="nav-item">

@@ -30,7 +30,7 @@
         </div>
 
         @if(Route::current()->getName()!= 'plantuml.byuser')
-        <div class="mb-3"><h2> Danh sách dự án </h2>
+            <div class="mb-3"><h2><i class="fa fa-archive"></i> Project list </h2>
             @foreach($projects as $p)
                 <a href="{{route('project.show',$p->name)}}" class="btn btn-dark">{{$p->name}}</a>
             @endforeach
@@ -82,17 +82,29 @@
             </div>
         </div>
     </div>
+    <div class="background-hover"></div>
     <style type="text/css" media="screen">
         .preview_img {
             position: relative;
             height: 50px;
         }
-
+        .background-hover.ihover {
+            background: #00000054;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 10;
+            top: 0;
+            left: 0;
+        }
         .preview_img.ihover {
             position: absolute;
+            top:0px;
             height: auto;
             z-index: 12;
             max-width: fit-content !important;
+            border:4px solid #ccc;
+            border-radius: 5px;
         }
     </style>
     <!-- jQuery -->
@@ -103,10 +115,12 @@
     <script>
         $(".preview_img").click(function () {
             $(this).toggleClass('ihover');
+            $(".background-hover").toggleClass('ihover');
         })
         $(document).click(function (e) {
             if (!$(e.target).is("img.preview_img")) {
                 $(".preview_img").removeClass('ihover');
+                $(".background-hover").removeClass('ihover');
             }
         })
     </script>
