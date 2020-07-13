@@ -21,6 +21,7 @@ class Plantuml extends Migration
             $table->string('img')->default('');
             $table->integer('user_id');
             $table->integer('project_id');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

@@ -9,7 +9,7 @@ use function Jawira\PlantUml\encodep;
 Class Plantuml extends Model {
 
     protected $table    = 'plantuml';
-    protected $fillable = ['name', 'url', 'code', 'user_id','img'];
+    protected $fillable = ['name', 'url', 'code', 'user_id','project_id','img'];
     //protected $with = ['project'];
 
     public function getUrlByCache() {
