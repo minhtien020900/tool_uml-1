@@ -17,6 +17,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('plantuml.create')}}"><i class="fa fa-plus-circle"></i> Create UML</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="create-category" href="javascript:void(0)"><i class="fa fa-plus-circle"></i>
+                        Create Category</a>
+                </li>
                 <li class="nav-item d-none">
                     <a class="nav-link" href="#">Services</a>
                 </li>
@@ -62,5 +66,30 @@
     <h1>{{$name_page??'UML'}}</h1>
     {{--    <h2><i class="fa fa-archive"></i> Project list </h2>--}}
     <div><h2>Project name: {{Session::get('current_projectI')['name']}}</h2></div>
+
     <div>{{Session::get('current_projectI')['desc']}}</div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <form action="/plantuml/save-category" method="post">
+
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><input type="text" name="name"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>

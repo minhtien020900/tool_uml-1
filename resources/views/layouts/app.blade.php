@@ -54,5 +54,6 @@
     </main>
 </div>
 <div class="text-center mt-2 mb-5" style="color:#ccc">Copyright © 2019 Team Chí. All Rights Reserved.</div>
+<script src="{{ asset('js/scripts.js') }}"></script>
 </body>
 </html>

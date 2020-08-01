@@ -19,8 +19,10 @@ Route::prefix('plantuml')->group(function () {
     Route::get('/show_url/{project}/{name}', 'Plantuml\ToolController@show_url')->name('plantuml.show');
     Route::get('/show_url/{name}', 'Plantuml\ToolController@show_url')->name('plantuml.show');
 });
-Route::prefix('plantuml')->middleware('auth')->group(function () {
 
+
+Route::prefix('plantuml')->middleware('auth')->group(function () {
+    Route::post('/save-category', 'Plantuml\CategoryController@store')->name('category.store');
     Route::get('project/{name}', 'Plantuml\ToolController@showproject')->name('project.show');
     Route::get('/', 'Plantuml\ToolController@index')->name('plantuml.index');
     Route::get('/create', 'Plantuml\ToolController@create')->name('plantuml.create');
