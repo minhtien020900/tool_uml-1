@@ -2,3 +2,6 @@
     color:red;
 
 }
+.modal-backdrop{
+    opacity: 0.6;
+}
