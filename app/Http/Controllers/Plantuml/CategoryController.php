@@ -20,6 +20,7 @@ class CategoryController extends Controller {
         $request->validate([
             'name' => 'required',
         ]);
+
         $name = $request->input('name');
         $p = new Project;
         $p->name = $name;
