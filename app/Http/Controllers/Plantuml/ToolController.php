@@ -7,6 +7,7 @@ use App\Entity\Project;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -15,17 +16,27 @@ use function Jawira\PlantUml\encodep;
 
 class ToolController extends Controller {
 
+    public  $projectId;
+    private $projects;
+
     public function __construct() {
+
         //parent::__construct();
-        $projects = Project::all();
-        View::share('projects', $projects);
+        $this->projects = Cache::remember('projects',1000,function(){
+            return Project::all();
+        });
+        $this->projectId = Session::get('current_projectI');
+        Session::put('current_projectI', $this->projects->where('id',1)->first()->toArray());
+        View::share('projects', $this->projects);
     }
 
 
     public function index(Request $request) {
-
         $puml = Plantuml::where('active', 1);
-
+        $this->projectId = Session::get('current_projectI');
+        if ($this->projectId !== null) {
+            $puml->where('project_id', $this->projectId);
+        }
         //<editor-fold desc="Order by">
         $puml = $this->order_by_uml($request, $puml);
         //</editor-fold>
@@ -36,11 +47,12 @@ class ToolController extends Controller {
 
         $puml = $puml->get();
 
-        return view('plantuml/list', ['data' => $puml]);
+
+        return view('plantuml/list', ['data' => $puml])->with('thisss',$this);
     }
 
     public function create() {
-        $puml             = null;
+        $puml = null;
 
         return view('plantuml/create', ['uml' => $puml]);
     }
@@ -52,16 +64,12 @@ class ToolController extends Controller {
         ]);
 
         try {
-
             $name = $request->input('name');
-
             if (Plantuml::where(['name' => $name])
                         ->count() > 1) {
                 $name = $name . "_" . str_random(3);
             }
-
             $hash = encodep($request->input('code'));
-
             $p             = Plantuml::firstOrCreate([
                 'name'       => $name,
                 'url'        => $hash,
@@ -187,33 +195,14 @@ class ToolController extends Controller {
                 // 'edit' => 'https://www.planttext.com/?text=' . $hash,
             ],
         ];
-
-
     }
 
     public function showproject(Request $request, $name) {
-        try {
-            $p = Project::where('name', $name)
-                        ->first();
+        $projectId =  (int) ($name);
+        $this->projectId = $projectId;
 
-            $puml = Plantuml::where('active', 1);
-
-            //<editor-fold desc="Order by">
-            $puml = $this->order_by_uml($request, $puml);
-            //</editor-fold>
-
-            //<editor-fold desc="Order by">
-            $puml->where('project_id', $p->id);
-            //</editor-fold>
-
-            $puml = $puml->get();
-
-            return view('plantuml/list', ['data' => $puml]);
-        } catch (\Exception $e) {
-            return redirect(route('404'))->with('error', $e->getMessage());
-        }
-
-
+        Session::put('current_projectI', $this->projects->where('id',$projectId)->first()->toArray());
+        return $this->index($request);
     }
 
 }

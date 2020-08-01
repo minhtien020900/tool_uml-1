@@ -3,7 +3,8 @@
         <a class="navbar-brand" href="#">
             {{--<img src="http://placehold.it/150x50?text=Logo" alt="">--}}
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -23,15 +24,18 @@
                     <a class="nav-link" href="#">Contact</a>
                 </li>
                 @guest
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}"><i class="fa fa-sign-in-alt"></i>  {{ __('Login') }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}"><i class="fa fa-registered"></i> {{ __('Register') }}</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}"><i
+                                class="fa fa-sign-in-alt"></i> {{ __('Login') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}"><i
+                                class="fa fa-registered"></i> {{ __('Register') }}</a>
+                    </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('plantuml.byuser',["id"=>\Illuminate\Support\Facades\Auth::id()]) }}">
+                        <a class="nav-link"
+                           href="{{ route('plantuml.byuser',["id"=>\Illuminate\Support\Facades\Auth::id()]) }}">
                             My UML
                         </a>
 
@@ -52,3 +56,11 @@
         </div>
     </div>
 </nav>
+
+<div class="container">
+    {{Session::flash('error')}}
+    <h1>{{$name_page??'UML'}}</h1>
+    {{--    <h2><i class="fa fa-archive"></i> Project list </h2>--}}
+    <div><h2>Project name: {{Session::get('current_projectI')['name']}}</h2></div>
+    <div>{{Session::get('current_projectI')['desc']}}</div>
+</div>
