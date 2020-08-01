@@ -41,7 +41,8 @@
                                 <div class="form-group">
                                     <label for="">Name diagram</label>
                                     {{--required--}}
-                                    <input type="text" {{isset($uml->name)?'readonly':''}} name="name" class="form-control" id="" placeholder="Input field" value="{{old('name',$uml->name??"")}}">
+                                    <input type="text" {{isset($uml->name)?'':''}} name="name" class="form-control" id="" placeholder="Input field" value="{{old('name',$uml->name??"")}}">
+                                    <input type="hidden" {{isset($uml->name)?'':''}} name="id" class="form-control" id="" placeholder="Input field" value="{{old('name',$uml->id??"")}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Project</label>

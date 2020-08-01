@@ -22,17 +22,19 @@ class ToolController extends Controller {
     public function __construct() {
 
         //parent::__construct();
-        $this->projects = Cache::remember('projects',1000,function(){
+        $this->projects  = Cache::remember('projects', 1000, function () {
             return Project::all();
         });
         $this->projectId = Session::get('current_projectI');
-        Session::put('current_projectI', $this->projects->where('id',1)->first()->toArray());
+        Session::put('current_projectI', $this->projects->where('id', 1)
+                                                        ->first()
+                                                        ->toArray());
         View::share('projects', $this->projects);
     }
 
 
     public function index(Request $request) {
-        $puml = Plantuml::where('active', 1);
+        $puml            = Plantuml::where('active', 1);
         $this->projectId = Session::get('current_projectI');
         if ($this->projectId !== null) {
             $puml->where('project_id', $this->projectId);
@@ -47,8 +49,7 @@ class ToolController extends Controller {
 
         $puml = $puml->get();
 
-
-        return view('plantuml/list', ['data' => $puml])->with('thisss',$this);
+        return view('plantuml/list', ['data' => $puml])->with('thisss', $this);
     }
 
     public function create() {
@@ -69,7 +70,7 @@ class ToolController extends Controller {
                         ->count() > 1) {
                 $name = $name . "_" . str_random(3);
             }
-            $hash = encodep($request->input('code'));
+            $hash          = encodep($request->input('code'));
             $p             = Plantuml::firstOrCreate([
                 'name'       => $name,
                 'url'        => $hash,
@@ -95,6 +96,7 @@ class ToolController extends Controller {
     public function update(Request $request) {
 
         $validator = Validator::make($request->all(), [
+            'id'   => 'required',
             'name' => 'required',
             'code' => 'required',
         ]);
@@ -104,10 +106,11 @@ class ToolController extends Controller {
             }
             $hash = encodep($request->input('code'));
             /** @var Plantuml $p */
-            $p = Plantuml::where(['name' => $request->input('name')])
+            $p = Plantuml::where(['id' => $request->input('id')])
                          ->first();
             if ($p->user_id == Auth::id()) {
                 $p->code       = $request->input('code');
+                $p->name       = $request->input('name');
                 $p->url        = $hash;
                 $p->project_id = $request->input('project');
 
@@ -135,7 +138,7 @@ class ToolController extends Controller {
             if ($name == null) {
                 $name = $project;
             }
-            $id = (int)$name;
+            $id = (int) $name;
             preg_match('/^(.+)\..+$/', $name, $match);
             $real_name = $match[1] ?? $name;
             /** @var Plantuml $mm */
@@ -170,7 +173,7 @@ class ToolController extends Controller {
     }
 
     public function edit($name) {
-        $id = (int) $name;
+        $id             = (int) $name;
         $mm             = (Plantuml::where(['id' => $id])
                                    ->first());
         $mm['projects'] = Project::all();
@@ -199,10 +202,13 @@ class ToolController extends Controller {
     }
 
     public function showproject(Request $request, $name) {
-        $projectId =  (int) ($name);
+        $projectId       = (int) ($name);
         $this->projectId = $projectId;
 
-        Session::put('current_projectI', $this->projects->where('id',$projectId)->first()->toArray());
+        Session::put('current_projectI', $this->projects->where('id', $projectId)
+                                                        ->first()
+                                                        ->toArray());
+
         return $this->index($request);
     }
 
