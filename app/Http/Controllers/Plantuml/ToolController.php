@@ -135,10 +135,11 @@ class ToolController extends Controller {
             if ($name == null) {
                 $name = $project;
             }
+            $id = (int)$name;
             preg_match('/^(.+)\..+$/', $name, $match);
             $real_name = $match[1] ?? $name;
             /** @var Plantuml $mm */
-            $plantuml_element = (Plantuml::where(['name' => $real_name])
+            $plantuml_element = (Plantuml::where(['id' => $id])
                                          ->first());
             if ($plantuml_element == null) {
                 throw new \Exception('ádf');
@@ -169,8 +170,8 @@ class ToolController extends Controller {
     }
 
     public function edit($name) {
-
-        $mm             = (Plantuml::where(['name' => $name])
+        $id = (int) $name;
+        $mm             = (Plantuml::where(['id' => $id])
                                    ->first());
         $mm['projects'] = Project::all();
 

@@ -13,7 +13,7 @@ Class Plantuml extends Model {
     //protected $with = ['project'];
 
     public function getUrlByCache() {
-        return route('plantuml.show', $this->name);
+        return route('plantuml.show', $this->id.'-'.$this->name);
     }
 
     public function project(){
