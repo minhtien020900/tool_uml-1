@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Plantuml;
 
 use App\Entity\Plantuml;
+use App\Entity\PlantumlHistory;
 use App\Entity\Project;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -109,12 +110,15 @@ class ToolController extends Controller {
             $p = Plantuml::where(['id' => $request->input('id')])
                          ->first();
             if ($p->user_id == Auth::id()) {
+
                 $p->code       = $request->input('code');
                 $p->name       = $request->input('name');
                 $p->url        = $hash;
                 $p->project_id = $request->input('project');
-
                 $p->save();
+
+                PlantumlHistory::copyData($p);
+
             } else {
                 $validator->getMessageBag()
                           ->add('authen', 'Don\'t have permission');
@@ -123,14 +127,14 @@ class ToolController extends Controller {
 
 
         } catch (\Exception $e) {
-            return redirect(route('plantuml.edit', $request->input('name')))
+            return redirect(route('plantuml.edit', $request->input('id').'-'.$request->input('name')))
                 ->withErrors($validator)
                 ->withInput();
         }
 
         $p->getDiagramByCache();
-
-        return redirect(route('plantuml.index'));
+        return redirect()->back();
+        return redirect(back());
     }
 
     public function show_url($project, $name = null, $type = null) {
@@ -178,7 +182,9 @@ class ToolController extends Controller {
                                    ->first());
         $mm['projects'] = Project::all();
 
-        //dd($mm->user->name);
+        $uml_history = PlantumlHistory::getToView($id);
+        View::share('uml_history',$uml_history);
+
         return view('plantuml/create', ['uml' => $mm]);
     }
 

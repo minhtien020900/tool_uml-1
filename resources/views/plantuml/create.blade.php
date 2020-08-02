@@ -21,7 +21,7 @@
 
 @section('content')
 
-    <div class='container'>
+    <div class=''>
         <div class='row'>
             <div class='col-12 mt-3'>
                 @if ($errors->any())
@@ -80,7 +80,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <div class="form-group">
                                             <label for="">Code diagram</label>
                                             <div style="position:relative;height:500px;">
@@ -96,7 +96,7 @@
                                                 @endif</div>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-8">
                                         <div class="form-group">
                                             @if(isset($uml->code)?true:false)
                                                 <img class="preview"
@@ -114,7 +114,23 @@
             </div>
         </div>
     </div>
+    @if(isset($uml_history) && count($uml_history)>0)
+        <h2>History</h2>
+        <div class="row">
+            @foreach($uml_history as $v)
+                <div class="col-3">
+                    <h3>{{$v->name}}</h3>
+                    <div>{{$v->updated_at}}</div>
+                    {!! $v->getUrlImg() !!}
+                </div>
+            @endforeach
+        </div>
+    @endif
     <style type="text/css" media="screen">
+        .preview {
+            max-width: 100%;
+        }
+
         #editor {
             position: absolute;
             top: 0;

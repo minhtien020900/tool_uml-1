@@ -14,6 +14,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected function order_by_uml($request, $puml) {
+        $puml->orderBy('id', 'desc');
         if (Session::get('last_sort') != $request->input('sortby')) {
             $type_order = 'desc';
         } else {
