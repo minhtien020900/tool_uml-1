@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Plantuml;
 use App\Entity\Plantuml;
 use App\Entity\PlantumlHistory;
 use App\Entity\Project;
+use App\Entity\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,8 @@ class ToolController extends Controller {
                                                         ->first()
                                                         ->toArray());
         View::share('projects', $this->projects);
+        $all_tags= Tag::all();
+        View::share('all_tags', $all_tags);
     }
 
 

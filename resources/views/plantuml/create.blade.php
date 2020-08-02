@@ -93,6 +93,11 @@
 
                                             <div id="tag-wrap">
                                                 <h3>Tags</h3>
+                                                <div id="all-tags">
+                                                    @foreach($all_tags as $v)
+                                                        <span>{{$v->name}}</span>
+                                                    @endforeach
+                                                </div>
                                                 <input type="text" name="tags" id="inputTags"
                                                        value="{{old('code',$uml->tags??"")}}">
                                             </div>

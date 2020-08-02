@@ -8,7 +8,7 @@ use function Jawira\PlantUml\encodep;
 
 Class Tag extends Model {
 
-    protected $table    = 'tag';
+    protected $table    = 'tags';
     protected $fillable = [];
 
 }
