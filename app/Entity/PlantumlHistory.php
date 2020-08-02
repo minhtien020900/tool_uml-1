@@ -73,6 +73,6 @@ Class PlantumlHistory extends Model {
     }
 
     public function getUrlImg() {
-        return '<img src="https://www.plantuml.com/plantuml/img/' . $this->url . '">';
+        return '<a  data-fancybox data-caption="" href="https://www.plantuml.com/plantuml/img/' . $this->url . '"> <img src="https://www.plantuml.com/plantuml/img/' . $this->url . '"></a>';
     }
 }

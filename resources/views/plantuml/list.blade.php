@@ -35,8 +35,10 @@
             <tr class="">
                 <td class="text-center " style="max-width: 10px;">{{$v->id}}</td>
                 <td class="text-center " style="max-width: 75px;">
-                    <img style="max-width: 70px;" class="preview_img" src="{{$v->getUrlByCache()}}.png"
+                    <a href="{{$v->getUrlByCache()}}.png" data-fancybox>
+                        <img style="max-width: 70px;" class="preview_img1"  src="{{$v->getUrlByCache()}}.png"
                          type="image/svg+xml">
+                    </a>
                 </td>
                 <td class="text-left ">{{$v->project->name??''}} </td>
                 <td class="text-left ">{{$v->name}} </td>

@@ -17,6 +17,9 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="/lib/fontawesome/css/all.min.css" rel="stylesheet">
+    <link href="/lib/fancybox/jquery.fancybox.min.css" rel="stylesheet">
+{{--    "C:\xampp\htdocs\vhosts\tool.oop.vn\public\lib\fancybox\jquery.fancybox.min.js"--}}
+{{--    "C:\xampp\htdocs\vhosts\tool.oop.vn\public\lib\fancybox\jquery.fancybox.min.css"--}}
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
@@ -54,6 +57,9 @@
     </main>
 </div>
 <div class="text-center mt-2 mb-5" style="color:#ccc">Copyright © 2019 Team Chí. All Rights Reserved.</div>
+
+<script src="/lib/fancybox/jquery.fancybox.min.js"></script>
 <script src="{{ asset('js/scripts.js') }}"></script>
+
 </body>
 </html>

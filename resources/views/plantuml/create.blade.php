@@ -37,7 +37,8 @@
                 @if(!isset($uml->name))
                     <form action="{{route('plantuml.store')}}" method="POST" role="form" id="uml-form">
                         @else
-                            <form action="{{route('plantuml.update',$uml->name)}}" method="POST" role="form" id="uml-form">
+                            <form action="{{route('plantuml.update',$uml->name)}}" method="POST" role="form"
+                                  id="uml-form">
                                 <input name="_method" type="hidden" value="PUT">
                                 @endif
                                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}"/>
@@ -92,7 +93,8 @@
 
                                             <div id="tag-wrap">
                                                 <h3>Tags</h3>
-                                                <input type="text" name="tags" id="inputTags" value="{{old('code',$uml->tags??"")}}">
+                                                <input type="text" name="tags" id="inputTags"
+                                                       value="{{old('code',$uml->tags??"")}}">
                                             </div>
 
                                             <div class="mt-3">
@@ -105,13 +107,17 @@
                                     </div>
                                     <div class="col-8">
                                         <div class="form-group">
-                                            @if(isset($uml->code)?true:false)
-                                                <img class="preview"
-                                                     src="https://www.plantuml.com/plantuml/img/{{isset($uml->url)?$uml->url:""}}">
-                                            @else
-                                                <img class="preview" src="http://placehold.it/200x200">
-                                            @endif
 
+                                            @if(isset($uml->code)?true:false)
+                                                <a data-fancybox data-caption="Caption for single image"
+                                                   href="https://www.plantuml.com/plantuml/img/{{isset($uml->url)?$uml->url:""}}"><img
+                                                        class="preview"
+                                                        src="https://www.plantuml.com/plantuml/img/{{isset($uml->url)?$uml->url:""}}"></a>
+                                            @else
+                                                <a data-fancybox data-caption="Caption for single image"
+                                                   href="https://www.plantuml.com/plantuml/img/{{isset($uml->url)?$uml->url:""}}"><img
+                                                        class="preview" src="http://placehold.it/200x200"></a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -126,17 +132,22 @@
 
     @if(isset($uml_history) && count($uml_history)>0)
         <h2>History</h2>
-        <div class="row">
+        <div class="row" id="history-wrap" class="fancybox">
             @foreach($uml_history as $v)
                 <div class="col-3">
+
                     <h3>{{$v->name}}</h3>
-                    <div>{{$v->updated_at}}</div>
+                    <div>{{$v->updated_at}} ({{round(s_datediff('h',$v->updated_at,date('Y-m-d h:n:s')),2)}})h  </div>
                     {!! $v->getUrlImg() !!}
                 </div>
             @endforeach
         </div>
     @endif
     <style type="text/css" media="screen">
+        #history-wrap img {
+            max-width: 100%;
+        }
+
         .preview {
             max-width: 100%;
         }
@@ -202,17 +213,17 @@
         }
     </script>
     <script src="/lib/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
-    <script >
-        $(document).ready(function(){
+    <script>
+        $(document).ready(function () {
             $("#inputTags").tagsinput('items')
         })
         // prevent ctrl + s
-        $(document).bind('keydown', function(e) {
-            if(e.ctrlKey && (e.which == 83)) {
+        $(document).bind('keydown', function (e) {
+            if (e.ctrlKey && (e.which == 83)) {
                 e.preventDefault();
                 console.log('dd');
-                if(window.confirm('Do you want save diagram ?')){
-                        $('#uml-form').submit();
+                if (window.confirm('Do you want save diagram ?')) {
+                    $('#uml-form').submit();
 
                 }
                 return false;
