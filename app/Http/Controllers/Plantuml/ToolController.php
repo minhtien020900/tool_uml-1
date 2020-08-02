@@ -101,6 +101,8 @@ class ToolController extends Controller {
             'name' => 'required',
             'code' => 'required',
         ]);
+
+
         try {
             if ($validator->fails()) {
                 throw new \Exception('validate');
@@ -114,6 +116,7 @@ class ToolController extends Controller {
                 $p->code       = $request->input('code');
                 $p->name       = $request->input('name');
                 $p->url        = $hash;
+                $p->tags       = $request->input('tags');
                 $p->project_id = $request->input('project');
                 $p->save();
 

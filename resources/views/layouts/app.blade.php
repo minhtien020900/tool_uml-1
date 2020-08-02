@@ -32,7 +32,7 @@
                     <div class="mb-3" id="list-project">
                         <ul>
                             @foreach($projects as $p)
-                                <li>
+                                <li class="{{Session::get('current_projectI')['id'] === $p->id ?'active':''}}">
                                     <a href="{{route('project.show',$p->id."-".$p->name)}}"
                                        class="{{Session::get('current_projectI')['id'] === $p->id ?'active':''}}">
                                         {{$p->name}}

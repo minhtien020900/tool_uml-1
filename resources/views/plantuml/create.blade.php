@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
           integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="/lib/bootstrap-tagsinput/bootstrap-tagsinput.css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-
 
     <![endif]-->
 @endsection
@@ -88,6 +89,12 @@
                                             </div>
                                             <textarea name="code"
                                                       class="d-none">{{old('code',$uml->code??"")}}</textarea>
+
+                                            <div id="tag-wrap">
+                                                <h3>Tags</h3>
+                                                <input type="text" name="tags" id="inputTags" value="{{old('code',$uml->tags??"")}}">
+                                            </div>
+
                                             <div class="mt-3">
                                                 <button class="btn btn-success build">Preview img</button>
                                                 <i id="icon-loading" class="fas fa-spinner  fa-spin d-none"></i>
@@ -114,6 +121,9 @@
             </div>
         </div>
     </div>
+
+
+
     @if(isset($uml_history) && count($uml_history)>0)
         <h2>History</h2>
         <div class="row">
@@ -190,6 +200,12 @@
 
 
         }
+    </script>
+    <script src="/lib/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+    <script >
+        $(document).ready(function(){
+            $("#inputTags").tagsinput('items')
+        })
     </script>
 @endsection
 
