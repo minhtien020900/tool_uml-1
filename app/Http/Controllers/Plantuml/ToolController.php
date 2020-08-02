@@ -101,27 +101,23 @@ class ToolController extends Controller {
             'name' => 'required',
             'code' => 'required',
         ]);
-
-
         try {
             if ($validator->fails()) {
                 throw new \Exception('validate');
             }
+
             $hash = encodep($request->input('code'));
             /** @var Plantuml $p */
             $p = Plantuml::where(['id' => $request->input('id')])
                          ->first();
             if ($p->user_id == Auth::id()) {
-
                 $p->code       = $request->input('code');
                 $p->name       = $request->input('name');
                 $p->url        = $hash;
-                $p->tags       = $request->input('tags');
+                $p->tags       = $request->input('tags')??'';
                 $p->project_id = $request->input('project');
                 $p->save();
-
                 PlantumlHistory::copyData($p);
-
             } else {
                 $validator->getMessageBag()
                           ->add('authen', 'Don\'t have permission');
@@ -130,6 +126,7 @@ class ToolController extends Controller {
 
 
         } catch (\Exception $e) {
+            dd($e);
             return redirect(route('plantuml.edit', $request->input('id').'-'.$request->input('name')))
                 ->withErrors($validator)
                 ->withInput();
