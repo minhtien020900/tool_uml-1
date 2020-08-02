@@ -35,9 +35,9 @@
                     </div>
                 @endif
                 @if(!isset($uml->name))
-                    <form action="{{route('plantuml.store')}}" method="POST" role="form">
+                    <form action="{{route('plantuml.store')}}" method="POST" role="form" id="uml-form">
                         @else
-                            <form action="{{route('plantuml.update',$uml->name)}}" method="POST" role="form">
+                            <form action="{{route('plantuml.update',$uml->name)}}" method="POST" role="form" id="uml-form">
                                 <input name="_method" type="hidden" value="PUT">
                                 @endif
                                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}"/>
@@ -206,6 +206,18 @@
         $(document).ready(function(){
             $("#inputTags").tagsinput('items')
         })
+        // prevent ctrl + s
+        $(document).bind('keydown', function(e) {
+            if(e.ctrlKey && (e.which == 83)) {
+                e.preventDefault();
+                console.log('dd');
+                if(window.confirm('Do you want save diagram ?')){
+                        $('#uml-form').submit();
+
+                }
+                return false;
+            }
+        });
     </script>
 @endsection
 
