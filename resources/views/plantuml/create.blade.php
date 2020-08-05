@@ -43,15 +43,11 @@
                                 @endif
                                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}"/>
                                 <div class="form-group">
-                                    <label for="">Name diagram</label>
                                     {{--required--}}
-                                    <input type="text" {{isset($uml->name)?'':''}} name="name" class="form-control"
+                                    <input type="text" {{isset($uml->name)?'':''}} name="name" class="form-control" placeholder="Name diagram"
                                            id="" placeholder="Input field" value="{{old('name',$uml->name??"")}}">
-                                    <input type="hidden" {{isset($uml->name)?'':''}} name="id" class="form-control"
+                                    <input type="hidden" {{isset($uml->name)?'':''}} name="id" class="form-control" placeholder="Name diagram"
                                            id="" placeholder="Input field" value="{{old('name',$uml->id??"")}}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Project</label>
                                 </div>
                                 <div class="form-group">
 
@@ -67,19 +63,7 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group">
-                                    @if(isset($uml->created_at))
-                                        <div><strong>Author</strong>: {{$uml->user->name}}</div>
-                                        <div>
-                                            <strong>Created_at:</strong> {{isset($uml->created_at)?$uml->created_at:''}}
-                                        </div>
-                                    @endif
-                                    @if(isset($uml->updated_at))
-                                        <div>
-                                            <strong>Updated_at:</strong> {{isset($uml->updated_at)?$uml->updated_at:''}}
-                                        </div>
-                                    @endif
-                                </div>
+
 
                                 <div class="row">
                                     <div class="col-4">
@@ -126,7 +110,19 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    @if(isset($uml->created_at))
+                                        <div><strong>Author</strong>: {{$uml->user->name}}</div>
+                                        <div>
+                                            <strong>Created_at:</strong> {{isset($uml->created_at)?$uml->created_at:''}}
+                                        </div>
+                                    @endif
+                                    @if(isset($uml->updated_at))
+                                        <div>
+                                            <strong>Updated_at:</strong> {{isset($uml->updated_at)?$uml->updated_at:''}}
+                                        </div>
+                                    @endif
+                                </div>
 
                             </form>
             </div>

@@ -30,23 +30,26 @@
     @include("plantuml/navbar")
     <main class="py-4">
         <div class="row">
-            <div class='col-2' id='wrap-top'>
-                @if(Route::current()->getName()!= 'plantuml.byuser')
-                    <div class="mb-3" id="list-project">
-                        <ul>
-                            @foreach($projects as $p)
-                                <li class="{{Session::get('current_projectI')['id'] === $p->id ?'active':''}}">
-                                    <a href="{{route('project.show',$p->id."-".$p->name)}}"
-                                       class="{{Session::get('current_projectI')['id'] === $p->id ?'active':''}}">
-                                        {{$p->name}}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-            </div>
-            <div class="col-10" id="wrap-bottom">
+            <div class='col-12' id='wrap-top'>
+            @if(Route::current()->getName()!= 'plantuml.byuser')
+                <div class="mb-3" id="list-project">
+                    <ul>
+                        @foreach($projects as $p)
+                            <li class="{{Session::get('current_projectI')['id'] === $p->id ?'active':''}}">
+                                <a href="{{route('project.show',$p->id."-".$p->name)}}"
+                                   class="{{Session::get('current_projectI')['id'] === $p->id ?'active':''}}">
+                                    {{$p->name}}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
+        </div>
+        <div class="row">
+
+            <div class="col-12" id="wrap-bottom">
                 <div class='row'>
                     <div class='col-12'>
                         @yield('content')
@@ -57,7 +60,26 @@
     </main>
 </div>
 <div class="text-center mt-2 mb-5" style="color:#ccc">Copyright © 2019 Team Chí. All Rights Reserved.</div>
+<div id="navbar">
 
+    <div class='col-12' id='wrap-top'>
+        <button> >> </button>
+        @if(Route::current()->getName()!= 'plantuml.byuser')
+            <div class="mb-3" id="list-project">
+                <ul>
+                    @foreach($projects as $p)
+                        <li class="{{Session::get('current_projectI')['id'] === $p->id ?'active':''}}">
+                            <a href="{{route('project.show',$p->id."-".$p->name)}}"
+                               class="{{Session::get('current_projectI')['id'] === $p->id ?'active':''}}">
+                                {{$p->name}}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
+</div>
 <script src="/lib/fancybox/jquery.fancybox.min.js"></script>
 <script src="{{ asset('js/scripts.js') }}"></script>
 
