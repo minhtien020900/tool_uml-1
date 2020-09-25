@@ -7,6 +7,7 @@
         img{
             cursor: pointer;
         }
+
         .ele-voca{
             float: left;
             width:200px;
@@ -18,6 +19,19 @@
             max-height: 100%;
             max-width: 100%;
         }
+        @media only screen and (max-width: 600px) {
+            .ele-voca{
+                float: left;
+                width:85px;
+                height:85px;
+                margin:5px;
+                box-shadow: 1px 1px 1px #ccc;
+            }
+            .ele-voca img{
+                max-height: 100%;
+                max-width: 100%;
+            }
+        }
     </style>
 @endsection
 @section('content')
@@ -25,38 +39,38 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                        @foreach($vocabularies as $v)
-                            <div class="ele-voca">
+                    @foreach($vocabularies as $v)
+                        <div class="ele-voca">
 
-                                <img data-id="{!! $v[0] !!}" src="{!! $v[6]??'' !!}">
-                                @if(isset($v[7]))
-                                    <audio hidden controls id="audio_{!! $v[0] !!}">
-                                        <source src="{!! $v[7]??'' !!}" type="audio/mpeg">
-                                        Your browser does not support the audio element.
-                                    </audio>
-                                @endif
+                            <img data-id="{!! $v[0] !!}" src="{!! $v[6]??'' !!}">
+                            @if(isset($v[7]))
+                                <audio hidden controls id="audio_{!! $v[0] !!}">
+                                    <source src="{!! $v[7]??'' !!}" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            @endif
 
-                            </div>
-                        @endforeach
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 @endsection
 @section('footer')
-<script>
-    var voca = function(){
-    };
-    voca.prototype.showss  = function(){
-    }
-    let m = new voca();
-    m.showss();
+    <script>
+        var voca = function(){
+        };
+        voca.prototype.showss  = function(){
+        }
+        let m = new voca();
+        m.showss();
 
 
-    $(document).ready(function(){})
-    $('img').click(function (){
-        $('#audio_'+$(this).data('id'))[0].play()
-        //console.log();
-    });
-</script>
+        $(document).ready(function(){})
+        $('img').click(function (){
+            $('#audio_'+$(this).data('id'))[0].play()
+            //console.log();
+        });
+    </script>
 @endsection
