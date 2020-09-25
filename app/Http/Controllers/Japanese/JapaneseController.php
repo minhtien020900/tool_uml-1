@@ -27,16 +27,26 @@ class JapaneseController extends Controller {
         $vocabularies = Cache::remember('vocabularies',1000,function(){
             return MyGoogleSheet::get();
         });
-
+        //$vocabularies
+        $vocabularies = array_filter($vocabularies,function($e){
+            if($e[6] !== ''){
+                return $e;
+            }
+        });
         View::share('vocabularies',$vocabularies);
         return view('japanese.list');
     }
 
     public function game(Request $request) {
         // JapaneseService::generate();
-        Cache::forget('vocabularies');
+        // Cache::forget('vocabularies');
         $vocabularies = Cache::remember('vocabularies',1000,function(){
             return MyGoogleSheet::get();
+        });
+        $vocabularies = array_filter($vocabularies,function($e){
+            if($e[6] !== ''){
+                return $e;
+            }
         });
         View::share('vocabularies',$vocabularies);
         return view('japanese.game');

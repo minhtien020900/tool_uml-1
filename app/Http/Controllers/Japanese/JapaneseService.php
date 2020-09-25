@@ -19,17 +19,16 @@ class JapaneseService {
             $textVI = $v[5];
 
             if (!file_exists($filename) || !file_exists($filenameVI)) {
-                $url = 'http://backend.sns.vn/api/v1/utilities/get-mp3?text=' . urlencode($textJA) . '&lang=ja';
+                $url = 'http://backend.laka.vn/api/v1/utilities/get-mp3?text=' . urlencode($textJA) . '&lang=ja';
                 echo $url;
                 $content = file_get_contents($url);
                 file_put_contents($filename, $content);
                 sleep(TIME_SLEEP);
-                $url = 'http://backend.sns.vn/api/v1/utilities/get-mp3?text=' . urlencode($textVI) . '&lang=vi';
-                echo $url;
-                $content = file_get_contents($url);
-                file_put_contents($filenameVI, $content);
-                sleep(TIME_SLEEP);
-                return;
+                // $url = 'http://backend.laka.vn/api/v1/utilities/get-mp3?text=' . urlencode($textVI) . '&lang=vi';
+                // echo $url;
+                // $content = file_get_contents($url);
+                // file_put_contents($filenameVI, $content);
+                // sleep(TIME_SLEEP);
             }
 
         }
