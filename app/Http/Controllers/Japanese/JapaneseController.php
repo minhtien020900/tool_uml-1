@@ -29,7 +29,7 @@ class JapaneseController extends Controller {
         });
         //$vocabularies
         $vocabularies = array_filter($vocabularies,function($e){
-            if($e[6] !== ''){
+            if(isset($e[6]) &&$e[6] !== ''){
                 return $e;
             }
         });
