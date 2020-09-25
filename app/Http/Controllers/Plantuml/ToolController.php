@@ -79,9 +79,13 @@ class ToolController extends Controller {
                 'name'       => $name,
                 'url'        => $hash,
                 'code'       => $request->input('code'),
+                'tags'       => $request->input('tags')??'',
                 'project_id' => (int) $request->input('project'),
                 'user_id'    => Auth::id()
             ]);
+
+            Tag::findNewAndUpdate($request->input('tags'));
+
             $p->project_id = (int) $request->input('project');
             $p->save();
 
@@ -113,6 +117,9 @@ class ToolController extends Controller {
             /** @var Plantuml $p */
             $p = Plantuml::where(['id' => $request->input('id')])
                          ->first();
+
+            Tag::findNewAndUpdate($request->input('tags'));
+
             if ($p->user_id == Auth::id()) {
                 $p->code       = $request->input('code');
                 $p->name       = $request->input('name');
