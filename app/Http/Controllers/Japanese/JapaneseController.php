@@ -22,7 +22,14 @@ class JapaneseController extends Controller {
 
     public function index(Request $request) {
 
-        JapaneseService::generate();
+        // JapaneseService::generate();
+        Cache::forget('vocabularies');
+        $vocabularies = Cache::remember('vocabularies',1000,function(){
+            return MyGoogleSheet::get();
+        });
+
+        View::share('vocabularies',$vocabularies);
+        return view('japanese.list');
     }
 
 
