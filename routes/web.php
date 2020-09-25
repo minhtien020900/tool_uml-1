@@ -37,7 +37,10 @@ Route::prefix('plantuml')->middleware('auth')->group(function () {
 Route::get('/404', function(){
     return view('404');
 })->name('404');
-
+Route::prefix('japanese')->group(function () {
+    Route::get('/', 'Japanese\JapaneseController@index')->name('japanese.index');
+});
 
 Auth::routes();
+
 
