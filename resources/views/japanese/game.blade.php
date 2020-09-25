@@ -40,11 +40,11 @@
             <div class="row">
                 <div class="col-12">
                     @foreach($vocabularies as $v)
-                        <div class="ele-voca">
+                        <div class="ele-voca" data-id="{!! $v[0] !!}">
 
                             <img data-id="{!! $v[0] !!}" src="{!! $v[6]??'' !!}">
                             @if(isset($v[7]))
-                                <audio hidden controls id="audio_{!! $v[0] !!}">
+                                <audio hidden controls id="audio_{!! $v[0] !!}" src="{!! $v[7]??'' !!}">
                                     <source src="{!! $v[7]??'' !!}" type="audio/mpeg">
                                     Your browser does not support the audio element.
                                 </audio>
@@ -59,12 +59,33 @@
 @endsection
 @section('footer')
     <script>
-        var voca = function(){
+        var voca = function(v){
+
+            this.id = $(v).data('id');
+
+
+            if($(v).children('img').length>0){
+                this.img = $(v).children('img')[0].getAttribute('src');
+            }else{
+                this.img ='';
+            }
+
+            if($(v).children('audio').length>0){
+                this.audio = $(v).children('audio')[0].getAttribute('src');
+            }else{
+                this.audio ='';
+            }
+
         };
         voca.prototype.showss  = function(){
         }
-        let m = new voca();
-        m.showss();
+        // let m = new voca();
+        // m.showss();
+        let vocalist = [];
+        $(".ele-voca").each((k,v)=>{
+            vocalist.push(new voca(v));
+        });
+
 
 
         $(document).ready(function(){})
