@@ -21,34 +21,43 @@ use function Jawira\PlantUml\encodep;
 class JapaneseController extends Controller {
 
     public function index(Request $request) {
-
-        // JapaneseService::generate();
+        $l = $request->input('l',1);
         Cache::forget('vocabularies');
-        $vocabularies = Cache::remember('vocabularies',1000,function(){
-            return MyGoogleSheet::get();
+        $vocabularies = Cache::remember('vocabularies', 1000, function () use ($l) {
+            $data         = new MyGoogleSheet;
+            $data->lesson = 'Bai' . $l;
+
+            return $data->get();
         });
         //$vocabularies
-        $vocabularies = array_filter($vocabularies,function($e){
-            if(isset($e[6]) &&$e[6] !== ''){
+        $vocabularies = array_filter($vocabularies, function ($e) {
+            if (isset($e[6]) && $e[6] !== '') {
                 return $e;
             }
         });
-        View::share('vocabularies',$vocabularies);
+        View::share('vocabularies', $vocabularies);
+
         return view('japanese.list');
     }
 
     public function game(Request $request) {
-        // JapaneseService::generate();
-        // Cache::forget('vocabularies');
-        $vocabularies = Cache::remember('vocabularies',1000,function(){
-            return MyGoogleSheet::get();
+
+        $l = $request->input('l',1);
+        
+        Cache::forget('vocabularies');
+        $vocabularies = Cache::remember('vocabularies', 1000, function ()  use ($l){
+            $data         = new MyGoogleSheet;
+            $data->lesson = 'Bai' . $l;
+
+            return $data->get();
         });
-        $vocabularies = array_filter($vocabularies,function($e){
-            if(isset($e[6]) &&$e[6] !== ''){
+        $vocabularies = array_filter($vocabularies, function ($e) {
+            if (isset($e[6]) && $e[6] !== '') {
                 return $e;
             }
         });
-        View::share('vocabularies',$vocabularies);
+        View::share('vocabularies', $vocabularies);
+
         return view('japanese.game');
     }
 
