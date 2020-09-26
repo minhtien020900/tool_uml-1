@@ -9,8 +9,8 @@
     </style>
 @endsection
 @section('content')
-    <div class="row">
-        <div class="container">
+    <div class="">
+        <div class="">
             <div class="row">
                 <div class="col-12">
                     <table class="table">
@@ -21,7 +21,7 @@
                                 <td><a>{!! $v[3] !!}</a></td>
                                 <td><a>{!! $v[5] !!}</a></td>
                                 <td><img data-id="{!! $v[0] !!}" src="{!! $v[6]??'' !!}"></td>
-                                <td>
+                                <td class="d-none">
                                     @if(isset($v[7]))
                                         <audio controls id="audio_{!! $v[0] !!}">
                                             <source src="{!! $v[7]??'' !!}" type="audio/mpeg">
