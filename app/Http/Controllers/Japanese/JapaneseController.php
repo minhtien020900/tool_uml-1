@@ -22,8 +22,8 @@ class JapaneseController extends Controller {
 
     public function index(Request $request) {
         $l = $request->input('l',1);
-        Cache::forget('vocabularies');
-        $vocabularies = Cache::remember('vocabularies', 1000, function () use ($l) {
+        // Cache::forget('vocabularies'. $l);
+        $vocabularies = Cache::remember('vocabularies'. $l, 1000, function () use ($l) {
             $data         = new MyGoogleSheet;
             $data->lesson = 'Bai' . $l;
 
@@ -43,9 +43,9 @@ class JapaneseController extends Controller {
     public function game(Request $request) {
 
         $l = $request->input('l',1);
-        
-        Cache::forget('vocabularies');
-        $vocabularies = Cache::remember('vocabularies', 1000, function ()  use ($l){
+
+        // Cache::forget('vocabularies'. $l);
+        $vocabularies = Cache::remember('vocabularies'. $l, 1000, function ()  use ($l){
             $data         = new MyGoogleSheet;
             $data->lesson = 'Bai' . $l;
 
