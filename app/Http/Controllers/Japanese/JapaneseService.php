@@ -18,9 +18,9 @@ class JapaneseService {
             $textJA = $v[1];
             $textVI = $v[5];
 
-            if (!file_exists($filename) || !file_exists($filenameVI)) {
+            if (!file_exists($filename)) {
                 $url = 'http://backend.laka.vn/api/v1/utilities/get-mp3?text=' . urlencode($textJA) . '&lang=ja';
-                echo $url;
+                echo $textVI;
                 $content = file_get_contents($url);
                 file_put_contents($filename, $content);
                 sleep(TIME_SLEEP);

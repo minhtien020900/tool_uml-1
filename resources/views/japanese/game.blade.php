@@ -130,6 +130,8 @@
             })
 
             function playRandom(){
+
+
                 if(flag_success === true){
                     random = vocalist[~~(vocalist.length * Math.random())]
                     flag_success = false;
@@ -140,10 +142,15 @@
             }
 
             function dungroi(){
-                $("#audio-repeat-source")[0].src = 'https://dm0qx8t0i9gc9.cloudfront.net/previews/audio/BsTwCwBHBjzwub4i4/audioblocks-successfully-organ-chord-achievement-4_BZHW4iOmYv8_NWM.mp3';
-                $("#audio-repeat")[0].load();
-                $("#audio-repeat")[0].play().then(()=>{
-                });
+                setTimeout(()=>{
+                    $("#audio-repeat-source")[0].src = 'https://dm0qx8t0i9gc9.cloudfront.net/previews/audio/BsTwCwBHBjzwub4i4/audioblocks-successfully-organ-chord-achievement-4_BZHW4iOmYv8_NWM.mp3';
+                    $("#audio-repeat")[0].load();
+                    $("#audio-repeat")[0].play().then(()=>{
+                    });
+                    flag_success = true;
+                },1000)
+                playRandom();
+
 
             }
 

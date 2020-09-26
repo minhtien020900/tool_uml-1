@@ -75,7 +75,7 @@ class MyGoogleSheet {
         define('EXTENTION', '.mp3');
         define('TIME_SLEEP', 5);
         $spreadsheetId = '1PFurLYDNoZY70nbQhUmDbbtPGnSn8RWY1Bgz7GtlZdg';
-        $range         = 'Sheet3!A1:J';
+        $range         = 'Bai1!A2:J';
         $response      = $service->spreadsheets_values->get($spreadsheetId, $range);
         $values        = $response->getValues();
         return $values;
