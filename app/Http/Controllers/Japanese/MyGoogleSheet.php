@@ -21,4 +21,14 @@ class MyGoogleSheet {
         $values        = $response->getValues();
         return $values;
     }
+
+    public function get_sentence() {
+        $s = new ServiceGoogle;
+        $service = $s->getService();
+        $spreadsheetId = '1PFurLYDNoZY70nbQhUmDbbtPGnSn8RWY1Bgz7GtlZdg';
+        $range         = 'Sentence!A2:J';
+        $response      = $service->spreadsheets_values->get($spreadsheetId, $range);
+        $values        = $response->getValues();
+        return $values;
+    }
 }

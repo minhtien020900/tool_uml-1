@@ -3,11 +3,20 @@
 namespace App\Http\Controllers\Japanese;
 
 class JapaneseService {
+    public function __construct() {
+        define('SITE_GENERATE_MP3','http://backend.laka.vn');
+    }
 
     public static function generate() {
-        $values = MyGoogleSheet::get();
+        define('SITE_GENERATE_MP3','http://backend.laka.vn');
+
+        $MyGoogleSheet = new MyGoogleSheet;
+        $values = $MyGoogleSheet->get();
 
         foreach ($values as $v) {
+            if (trim($v[5]) === '') {
+                continue;
+            }
             if ((int) $v[2] !== 1) {
                 continue;
             }
@@ -18,21 +27,57 @@ class JapaneseService {
             $textJA = $v[1];
             $textVI = $v[5];
 
+
             if (!file_exists($filename)) {
-                $url = 'http://backend.laka.vn/api/v1/utilities/get-mp3?text=' . urlencode($textJA) . '&lang=ja';
+                $url = SITE_GENERATE_MP3.'/api/v1/utilities/get-mp3?text=' . urlencode($textJA) . '&lang=ja';
                 echo $textVI;
                 $content = file_get_contents($url);
                 file_put_contents($filename, $content);
                 sleep(TIME_SLEEP);
-                // $url = 'http://backend.laka.vn/api/v1/utilities/get-mp3?text=' . urlencode($textVI) . '&lang=vi';
-                // echo $url;
-                // $content = file_get_contents($url);
-                // file_put_contents($filenameVI, $content);
-                // sleep(TIME_SLEEP);
             }
 
         }
     }
+
+
+    public static function read_sentence() {
+        define('SITE_GENERATE_MP3','http://backend.laka.vn');
+        $MyGoogleSheet = new MyGoogleSheet;
+        $senctence = $MyGoogleSheet->get_sentence();
+        define('EXTENTION','.mp3');
+        define('TIME_SLEEP',5);
+
+        foreach ($senctence as $row){
+            $f          = $row[0]??'';
+            $filename   = $f . EXTENTION;
+            if(file_exists($filename)){
+                continue;
+             }
+            // if ((int) $v[2] !== 1) {
+            //     continue;
+            // }
+            $row[0] = $row[0]??null;
+
+            if(empty($row[0]) ){
+                continue;
+            }
+
+
+            $textJA = $row[0];
+            if (!file_exists($filename)) {
+                $url = SITE_GENERATE_MP3.'/api/v1/utilities/get-mp3?text=' . urlencode($textJA) . '&lang=ja';
+                echo $textJA;
+                $content = file_get_contents($url);
+                file_put_contents($filename, $content);
+                sleep(TIME_SLEEP);
+
+            }
+
+        }
+        dd($senctence);
+    }
+
+
     public static function vn_to_str ($str){
 
         $unicode = array(
