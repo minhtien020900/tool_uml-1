@@ -30,10 +30,10 @@
 
     @include("japanese/navbar")
     <main class="py-4">
-        <div class="row">
-            <div class="col-12" id="wrap-bottom">
-                <div class='row'>
-                    <div class='col-12'>
+        <div class="">
+            <div class="" id="wrap-bottom">
+                <div class=''>
+                    <div class=''>
                         @yield('content')
                     </div>
                 </div>

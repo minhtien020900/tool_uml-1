@@ -1,61 +1,74 @@
 @extends('layouts/app_blank_japanese')
 @section('header')
-    <style>
-        #repeate {
-            position: fixed;
-            bottom: 0px;
-            background: #ccc;
-            right: 0px;
-            width: 100%;
-            text-align: center;
-        }
-
-        img {
-            cursor: pointer;
-        }
-
-        .ele-voca {
-            text-align: center;
-            float: left;
-            width: 200px;
-            height: 200px;
-            margin: 5px;
-            box-shadow: 1px 1px 1px #ccc;
-        }
-
-        .ele-voca img {
-            max-height: 100%;
-            max-width: 100%;
-        }
-
-        @media only screen and (max-width: 600px) {
-            .ele-voca {
-                float: left;
-                width: 85px;
-                height: 85px;
-                margin: 5px;
-                box-shadow: 1px 1px 1px #ccc;
-            }
-
-            .ele-voca img {
-                max-height: 100%;
-                max-width: 100%;
-            }
-        }
-    </style>
+<style>
+    #card{
+        text-align: center;
+    }
+    .text{
+        font-weight: bold;
+        font-size: 30px;
+    }
+</style>
 @endsection
 @section('content')
-
+    <div id="app-card">
+        <div id="card">
+            <div class=" d-none all"></div>
+            <div class="text"></div>
+            <div class="meaning"></div>
+        </div>
+    </div>
 @endsection
 @section('footer')
     <script>
 
-        var data_voca = [];
-        $(document).ready(()=>{
-            $.get( "/api/card?l=2", function( data ) {
-                data_voca = data;
-                console.table(data_voca);
+        var vocalist = [];
+        $(document).ready(() => {
+            $.get("/api/card?l=2", function (data) {
+                // let random = vocalist[~~(vocalist.length * Math.random())]
+                vocalist = data.sort(function () {
+                    return .5 - Math.random();
+                });
+                play();
             });
         })
+        function displayCard(d) {
+            $('#card .text').text(d[1]);
+            $('#card .meaning').text(d[5]);
+            $('#card .all').text(JSON.stringify(d));
+        }
+
+        function play() {
+            displayCard(vocalist[0])
+        }
+        var i = 0
+        $(document).ready(function() {
+            $(this).keydown(function(e) {
+                // phải
+                console.log(e.keyCode);
+                if(e.keyCode === 39){
+                    if( i > vocalist.length){
+                        i=0;
+                    }
+                    i++;
+                    displayCard(vocalist[i]);
+                    console.log(i);
+
+                }
+                // trái
+                if(e.keyCode === 37){
+                    if (i < 0) {
+                        i = vocalist.length-1;
+                    }
+                    i--;
+                    displayCard(vocalist[i]);
+                    console.log(i);
+
+                }
+                // if(e.keyCode === 18) { alt_shifter = true; $('.access_key').css({ textDecoration: 'underline' }); }
+            });
+
+
+        });
     </script>
 @endsection
