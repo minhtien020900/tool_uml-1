@@ -60,5 +60,10 @@ class JapaneseController extends Controller {
 
         return view('japanese.game');
     }
+    public function card(Request $request) {
+
+
+        return view('japanese.card');
+    }
 
 }
