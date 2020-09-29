@@ -61,4 +61,25 @@ class JapaneseController extends Controller {
         return view('japanese.game');
     }
 
+    public function test(Request $request) {
+
+        $l = $request->input('l',1);
+
+        // Cache::forget('vocabularies'. $l);
+        $vocabularies = Cache::remember('vocabularies'. $l, 1000, function ()  use ($l){
+            $data         = new MyGoogleSheet;
+            $data->lesson = 'Bai' . $l;
+
+            return $data->get();
+        });
+        $vocabularies = array_filter($vocabularies, function ($e) {
+            if (isset($e[6]) && $e[6] !== '') {
+                return $e;
+            }
+        });
+        View::share('vocabularies', $vocabularies);
+
+        return view('japanese.test');
+    }
+
 }

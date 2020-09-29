@@ -42,6 +42,7 @@ Route::prefix('japanese')->group(function () {
 });
 Route::get('/', 'Japanese\JapaneseController@index')->name('japanese.index');
 Route::get('/game', 'Japanese\JapaneseController@game')->name('japanese.game');
+Route::get('/test', 'Japanese\JapaneseController@test')->name('japanese.test');
 
 Auth::routes();
 
