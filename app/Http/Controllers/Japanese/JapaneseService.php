@@ -13,7 +13,7 @@ class JapaneseService {
         define('TIME_SLEEP',5);
 
         $MyGoogleSheet = new MyGoogleSheet;
-        $MyGoogleSheet->lesson = 'Bai2';
+        $MyGoogleSheet->lesson = 'Bai3';
 
         $values = $MyGoogleSheet->get();
 

@@ -1,18 +1,20 @@
 @extends('layouts/app_blank_japanese')
 @section('header')
     <style>
-        #card{
+        #card {
             text-align: center;
         }
-        .text{
+
+        .text {
             font-weight: bold;
             font-size: 35px;
         }
-.toolbar-fixed{
-    position: fixed;
-    bottom: 0px;
-    width: 100%;
-}
+
+        .toolbar-fixed {
+            position: fixed;
+            bottom: 0px;
+            width: 100%;
+        }
     </style>
 @endsection
 @section('content')
@@ -26,30 +28,31 @@
 
         </div>
         <div class="toolbar-fixed text-center">
-            <button class="btn btn-lg btn-primary moveLeft" >Left</button>
-            <button class="btn btn-lg btn-secondary moveDone" >Done</button>
-            <button class="btn btn-lg btn-primary moveRight" >Right</button>
+            <button class="btn btn-lg btn-primary moveLeft">Left</button>
+            <button class="btn btn-lg btn-secondary moveDone">Done</button>
+            <button class="btn btn-lg btn-primary moveRight">Right</button>
         </div>
     </div>
     <audio hidden controls id="audio-repeat">
-        <source src="http://dev.japanese.oop.vn/storage/japanese_audio/Bai2/9_jishiyo_Tu_dien.mp3" type="audio/mpeg" id="audio-repeat-source">
+        <source src="http://dev.japanese.oop.vn/storage/japanese_audio/Bai2/9_jishiyo_Tu_dien.mp3" type="audio/mpeg"
+                id="audio-repeat-source">
         Your browser does not support the audio element.
     </audio>
 @endsection
 @section('footer')
     <script>
-        $('.moveLeft').on('click',function(){
+        $('.moveLeft').on('click', function () {
             moveLeft();
         });
-        $('.moveRight').on('click',function(){
+        $('.moveRight').on('click', function () {
             moveRight();
         });
-        $('.moveDone').on('click',function(){
+        $('.moveDone').on('click', function () {
             moveDone();
         });
         var vocalist = [];
         $(document).ready(() => {
-            $.get("/api/card?l=2", function (data) {
+            $.get("/api/card?l={{$lesson}}", function (data) {
                 // let random = vocalist[~~(vocalist.length * Math.random())]
                 vocalist = data.sort(function () {
                     return .5 - Math.random();
@@ -57,11 +60,12 @@
                 play();
             });
         })
+
         function displayCard(d) {
             $('#card .text').text(d[1]);
             $('#card .meaning').text(d[5]);
             $('#card .meaning').hide();
-            $('#card .image img').attr('src',d[6]);
+            $('#card .image img').attr('src', d[6]);
 
             $('#card .all').text(JSON.stringify(d));
 
@@ -74,10 +78,12 @@
         function play() {
             displayCard(vocalist[0])
         }
+
         var i = 0
+
         function moveDone() {
-            vocalist = vocalist.filter((k,v)=>{
-                if(k !== i){
+            vocalist = vocalist.filter((k, v) => {
+                if (k !== i) {
                     return v;
                 }
             })
@@ -85,9 +91,10 @@
             moveRight();
 
         }
+
         function moveRight() {
-            if( i > vocalist.length){
-                i=0;
+            if (i > vocalist.length) {
+                i = 0;
             }
             i++;
             displayCard(vocalist[i]);
@@ -96,22 +103,22 @@
 
         function moveLeft() {
             if (i < 0) {
-                i = vocalist.length-1;
+                i = vocalist.length - 1;
             }
             i--;
             displayCard(vocalist[i]);
             console.log(i);
         }
 
-        $(document).ready(function() {
-            $(this).keydown(function(e) {
+        $(document).ready(function () {
+            $(this).keydown(function (e) {
                 // phải
                 console.log(e.keyCode);
-                if(e.keyCode === 39){
+                if (e.keyCode === 39) {
                     moveRight();
                 }
                 // trái
-                if(e.keyCode === 37){
+                if (e.keyCode === 37) {
                     moveLeft();
                 }
                 // if(e.keyCode === 18) { alt_shifter = true; $('.access_key').css({ textDecoration: 'underline' }); }
