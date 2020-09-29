@@ -8,9 +8,13 @@ class JapaneseService {
     }
 
     public static function generate() {
-        define('SITE_GENERATE_MP3','http://backend.laka.vn');
+        define('SITE_GENERATE_MP3','http://backend.sns.vn');
+        define('EXTENTION','.mp3');
+        define('TIME_SLEEP',5);
 
         $MyGoogleSheet = new MyGoogleSheet;
+        $MyGoogleSheet->lesson = 'Bai3';
+
         $values = $MyGoogleSheet->get();
 
         foreach ($values as $v) {

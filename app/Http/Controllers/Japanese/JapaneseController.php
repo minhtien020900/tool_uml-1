@@ -60,6 +60,13 @@ class JapaneseController extends Controller {
 
         return view('japanese.game');
     }
+    public function card(Request $request) {
+        $lesson = $request->input('l',1);
+        View::share('lesson', $lesson);
+
+
+        return view('japanese.card');
+    }
 
     public function test(Request $request) {
 

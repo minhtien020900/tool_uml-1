@@ -45,9 +45,9 @@
     </style>
 @endsection
 @section('content')
-    <div class="row">
-        <div class="container">
-            <div class="row">
+    <div class="">
+        <div class="">
+            <div class="">
                 <div class="col-12">
                     @foreach($vocabularies as $v)
                         <div class="ele-voca" data-id="{!! $v[0] !!}">
