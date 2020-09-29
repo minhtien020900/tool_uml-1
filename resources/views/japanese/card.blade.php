@@ -15,6 +15,9 @@
             bottom: 0px;
             width: 100%;
         }
+        .image{
+            cursor: pointer;
+        }
     </style>
 @endsection
 @section('content')
@@ -25,7 +28,6 @@
             <div class="meaning"></div>
             <div class="image"><img src=""></div>
             <hr>
-
         </div>
         <div class="toolbar-fixed text-center">
             <button class="btn btn-lg btn-primary moveLeft">Left</button>
@@ -134,8 +136,6 @@
                 }
                 // if(e.keyCode === 18) { alt_shifter = true; $('.access_key').css({ textDecoration: 'underline' }); }
             });
-
-
         });
     </script>
 @endsection
