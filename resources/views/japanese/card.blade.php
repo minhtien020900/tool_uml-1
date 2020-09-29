@@ -50,6 +50,10 @@
         $('.moveDone').on('click', function () {
             moveDone();
         });
+        $('.image').on('click', function () {
+            playaudio();
+        });
+
         var vocalist = [];
         $(document).ready(() => {
             $.get("/api/card?l={{$lesson}}", function (data) {
@@ -81,6 +85,13 @@
 
         var i = 0
 
+        function playaudio() {
+
+            let d = vocalist[i];
+            $("#audio-repeat-source")[0].src = d[7];
+            $("#audio-repeat")[0].load();
+            $("#audio-repeat")[0].play();
+        }
         function moveDone() {
             vocalist = vocalist.filter((k, v) => {
                 if (k !== i) {
