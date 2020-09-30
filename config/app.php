@@ -228,4 +228,5 @@ return [
 
     ],
 
+    'site_generate_mp3' => env('SITE_GENERATE_MP3', 'http://backend.laka.vn'),
 ];

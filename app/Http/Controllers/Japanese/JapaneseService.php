@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Japanese;
 
 class JapaneseService {
     public function __construct() {
-        define('SITE_GENERATE_MP3','http://backend.laka.vn');
+        $value = config('app.site_generate_mp3');
+        if(!defined('SITE_GENERATE_MP3'))define('SITE_GENERATE_MP3',$value);
     }
 
     public static function generate() {
-        define('SITE_GENERATE_MP3','http://backend.sns.vn');
-        define('EXTENTION','.mp3');
-        define('TIME_SLEEP',5);
+        $value = config('app.site_generate_mp3');
+        if(!defined('SITE_GENERATE_MP3'))define('SITE_GENERATE_MP3',$value);
+        if(!defined('EXTENTION'))define('EXTENTION','.mp3');
+        if(!defined('TIME_SLEEP'))define('TIME_SLEEP',5);
 
         $MyGoogleSheet = new MyGoogleSheet;
         $MyGoogleSheet->lesson = 'Bai3';
