@@ -49,6 +49,18 @@
                     <a class="d-none dropdown-item" href="#">Something else here</a>
                 </div>
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Test
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/test?l=1">Bài 1</a>
+                    <a class="dropdown-item" href="/test?l=2">Bài 2</a>
+                    <a class="dropdown-item" href="/test?l=3">Bài 3</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="d-none dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Game</a>
             </li>
