@@ -22,6 +22,10 @@ class japanese_write extends Command
      * @var string
      */
     protected $description = 'Command description';
+    /**
+     * @var SpreadsheetSnippets
+     */
+    private $snippets;
 
     /**
      * Create a new command instance.
@@ -43,12 +47,12 @@ class japanese_write extends Command
         $s = new ServiceGoogle;
         $service = $s->getService();
         $spreadsheetId = '1PFurLYDNoZY70nbQhUmDbbtPGnSn8RWY1Bgz7GtlZdg';
-        $range         = 'Sentence!A22:A22';
-        $values=['13'];
-        $requestBody = new Google_Service_Sheets_ValueRange([
-            'values' => $values
-        ]);
-        $response      = $service->spreadsheets_values->batchUpdate($spreadsheetId, $range,$requestBody);
-        var_dump($response);
+        $range         = 'Sentence!f22:g23';
+        $data = [['それはだれのけばんですか。これはわたしのです。','fdfdfd'],[1,2]];
+        $rs = new SpreadsheetSnippets($service);
+
+        $result =  $rs->updateValues($spreadsheetId, $range, 'USER_ENTERED',$data);
+
     }
+
 }
