@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 Route::get('/card','Japanese\api\APIJapaneseController@card');
+Route::post('/save_comment','Japanese\api\APIJapaneseController@save_comment');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

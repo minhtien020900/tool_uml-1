@@ -7,8 +7,8 @@ use App\Http\Controllers\Japanese\ServiceGoogle;
 use Google_Service_Sheets_ValueRange;
 use Illuminate\Console\Command;
 
-class japanese_write extends Command
-{
+class japanese_write extends Command {
+
     /**
      * The name and signature of the console command.
      *
@@ -22,14 +22,17 @@ class japanese_write extends Command
      * @var string
      */
     protected $description = 'Command description';
+    /**
+     * @var SpreadsheetSnippets
+     */
+    private $snippets;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -38,17 +41,16 @@ class japanese_write extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
-        $s = new ServiceGoogle;
-        $service = $s->getService();
+    public function handle() {
+        $s             = new ServiceGoogle;
+        $service       = $s->getService();
         $spreadsheetId = '1PFurLYDNoZY70nbQhUmDbbtPGnSn8RWY1Bgz7GtlZdg';
-        $range         = 'Sentence!A22:A22';
-        $values=['13'];
-        $requestBody = new Google_Service_Sheets_ValueRange([
-            'values' => $values
-        ]);
-        $response      = $service->spreadsheets_values->batchUpdate($spreadsheetId, $range,$requestBody);
-        var_dump($response);
+        $range         = 'Sentence!f22:f22';
+        $data          = [['それはだれのけばんですか。これはわたしのです。']];
+        $rs            = new SpreadsheetSnippets($service);
+
+        $result = $rs->updateValues($spreadsheetId, $range, 'USER_ENTERED', $data);
+
     }
+
 }

@@ -32,6 +32,16 @@ class APIJapaneseController extends Controller {
         });
         return $vocabularies;
     }
+    public function save_comment(Request $request){
+        $id = $request->input('id');
+        $text = $request->input('text');
+        $correct = $request->input('correct');
 
+        $google = new MyGoogleSheet();
+        $range         = 'Sentence!j'.($id+1).':z2000';
+        $data = [[time(),$text,$correct]];
+        $rs = $google->set_sentence($range,$data);
+        return $rs;
+    }
 
 }

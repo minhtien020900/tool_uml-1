@@ -1,18 +1,23 @@
 @extends('layouts/app_blank_japanese')
 @section('header')
     <style>
+        input{
+            text-align: center;
+        }
     </style>
 @endsection
 @section('content')
     <div class="container">
-        <div class="text-center">
-            <strong></strong>
+        <div class="text-center show-question">
+            <div><strong></strong></div>
+            <div><img></div>
         </div>
         <input class="form-control">
     </div>
 
     @foreach($vocabularies as $v)
-        <div class="d-none ele-voca" data-id="{!! $v[0] !!}" data-text ='{!! $v[1] !!}' data-meaning ='{!! $v[5] !!}'>{!! $v[1] !!}
+        <div class="d-none ele-voca" data-id="{!! $v[0] !!}" data-text ='{!! $v[1] !!}' data-meaning ='{!! $v[5] !!}'>
+            {!! $v[1] !!}
             <img data-id="{!! $v[0] !!}" src="{!! $v[6]??'' !!}">
             @if(isset($v[7]))
                 <audio hidden controls id="audio_{!! $v[0] !!}" src="{!! $v[7]??'' !!}">
@@ -62,7 +67,9 @@
     showQuestion(random);
 
     function showQuestion(question){
-        $('strong').text(question.meaning)
+        $('.show-question strong').text(question.meaning)
+        $('.show-question strong').hide();
+        $('.show-question img').attr('src',question.img);
     }
     $('input').on('keydown',function(e){
         if(e.keyCode === 13){
@@ -71,11 +78,25 @@
                 $("#audio-repeat")[0].load();
                 $("#audio-repeat")[0].play().then(()=>{
                 });
+                let m = $(this).val().trim()
+                $.post('/api/save_comment',{id:random.id,correct:JSON.stringify(random),text:m},()=>{
+
+                })
+                random = vocalist[~~(vocalist.length * Math.random())];
+                showQuestion(random);
+                $("input").val('');
+
+
             }else{
                 $("#audio-repeat-source")[0].src = 'https://dm0qx8t0i9gc9.cloudfront.net/previews/audio/BsTwCwBHBjzwub4i4/audioblocks-game-funny-fail-2-lose-incorrect-answer-arcade-lose-incorrect-answer-arcade_rYcM9WGICv8_NWM.mp3';
                 $("#audio-repeat")[0].load();
                 $("#audio-repeat")[0].play().then(()=>{
                 });
+
+                $.post('/api/save_comment',{id:random.id,correct:JSON.stringify(random),text:$(this).val().trim()})
+                random = vocalist[~~(vocalist.length * Math.random())];
+                showQuestion(random);
+                $("input").val('');
             }
         }
     })
