@@ -7,8 +7,8 @@ use App\Http\Controllers\Japanese\ServiceGoogle;
 use Google_Service_Sheets_ValueRange;
 use Illuminate\Console\Command;
 
-class japanese_write extends Command
-{
+class japanese_write extends Command {
+
     /**
      * The name and signature of the console command.
      *
@@ -32,8 +32,7 @@ class japanese_write extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -42,16 +41,15 @@ class japanese_write extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
-        $s = new ServiceGoogle;
-        $service = $s->getService();
+    public function handle() {
+        $s             = new ServiceGoogle;
+        $service       = $s->getService();
         $spreadsheetId = '1PFurLYDNoZY70nbQhUmDbbtPGnSn8RWY1Bgz7GtlZdg';
-        $range         = 'Sentence!f22:g23';
-        $data = [['それはだれのけばんですか。これはわたしのです。','fdfdfd'],[1,2]];
-        $rs = new SpreadsheetSnippets($service);
+        $range         = 'Sentence!f22:f22';
+        $data          = [['それはだれのけばんですか。これはわたしのです。']];
+        $rs            = new SpreadsheetSnippets($service);
 
-        $result =  $rs->updateValues($spreadsheetId, $range, 'USER_ENTERED',$data);
+        $result = $rs->updateValues($spreadsheetId, $range, 'USER_ENTERED', $data);
 
     }
 

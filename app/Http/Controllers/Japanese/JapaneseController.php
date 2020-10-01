@@ -69,7 +69,6 @@ class JapaneseController extends Controller {
     }
 
     public function test(Request $request) {
-
         $l = $request->input('l',1);
 
         // Cache::forget('vocabularies'. $l);
@@ -88,5 +87,7 @@ class JapaneseController extends Controller {
 
         return view('japanese.test');
     }
+
+
 
 }
