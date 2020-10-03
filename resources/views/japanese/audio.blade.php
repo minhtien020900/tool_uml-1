@@ -3,7 +3,7 @@
 
 @endsection
 @section('content')
-son123
+son123456
 
     <div class="text-center">
 
