@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Symfony\Component\Process\Process;
 use function Jawira\PlantUml\encodep;
 
 class JapaneseController extends Controller {
@@ -94,8 +95,13 @@ class JapaneseController extends Controller {
         return view('japanese.audio');
     }
     public function pullsource(Request $request) {
-        echo exec('git pull');
-        // return view('japanese.audio');
+        if (true) {
+            $root_path = base_path();
+            $process = new Process('git pull');
+            $process->run(function ($type, $buffer) {
+                echo $buffer;
+            });
+        }
     }
 
 
