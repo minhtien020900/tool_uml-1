@@ -3,8 +3,6 @@
 
 @endsection
 @section('content')
-son123456890
-
     <div class="text-center">
 
         <h2>Lesson 1</h2>
