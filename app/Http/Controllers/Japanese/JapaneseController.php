@@ -40,6 +40,7 @@ class JapaneseController extends Controller {
         return view('japanese.list');
     }
 
+
     public function game(Request $request) {
 
         $l = $request->input('l',1);
@@ -60,6 +61,7 @@ class JapaneseController extends Controller {
 
         return view('japanese.game');
     }
+
     public function card(Request $request) {
         $lesson = $request->input('l',1);
         View::share('lesson', $lesson);
@@ -88,6 +90,9 @@ class JapaneseController extends Controller {
         return view('japanese.test');
     }
 
+    public function audio(Request $request) {
+        return view('japanese.audio');
+    }
 
 
 }

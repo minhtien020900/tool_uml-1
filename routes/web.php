@@ -44,6 +44,8 @@ Route::get('/', 'Japanese\JapaneseController@index')->name('japanese.index');
 Route::get('/game', 'Japanese\JapaneseController@game')->name('japanese.game');
 Route::get('/test', 'Japanese\JapaneseController@test')->name('japanese.test');
 Route::get('/card', 'Japanese\JapaneseController@card')->name('japanese.card');
+Route::get('/audio', 'Japanese\JapaneseController@audio')->name('japanese.audio');
+
 Auth::routes();
 
 
