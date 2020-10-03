@@ -62,7 +62,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#">Game</a>
+                <a class="nav-link" href="/audio">Audio</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
