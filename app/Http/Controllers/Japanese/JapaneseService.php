@@ -11,49 +11,6 @@ class JapaneseService {
         }
     }
 
-    public static function generate() {
-        $value = config('app.site_generate_mp3');
-        if (!defined('SITE_GENERATE_MP3')) {
-            define('SITE_GENERATE_MP3', $value);
-        }
-        if (!defined('EXTENTION')) {
-            define('EXTENTION', '.mp3');
-        }
-        if (!defined('TIME_SLEEP')) {
-            define('TIME_SLEEP', 5);
-        }
-
-        $MyGoogleSheet         = new MyGoogleSheet;
-        $MyGoogleSheet->lesson = 'Bai3';
-
-        $values = $MyGoogleSheet->get();
-
-        foreach ($values as $v) {
-            if (trim($v[5]) === '') {
-                continue;
-            }
-            if ((int) $v[2] !== 1) {
-                continue;
-            }
-            $f          = $v[0] . '_' . $v[3] . '_' . self::vn_to_str($v[5]);
-            $filename   = $f . EXTENTION;
-            $filenameVI = $f . '_vi' . EXTENTION;
-
-            $textJA = $v[1];
-            $textVI = $v[5];
-
-            if (!file_exists($filename)) {
-                $url = SITE_GENERATE_MP3 . '/api/v1/utilities/get-mp3?text=' . urlencode($textJA) . '&lang=ja';
-                echo $textVI;
-                $content = file_get_contents($url);
-                file_put_contents($filename, $content);
-                sleep(TIME_SLEEP);
-            }
-
-        }
-    }
-
-
     public static function read_sentence() {
         define('SITE_GENERATE_MP3', config('app.site_generate_mp3'));
 
@@ -145,6 +102,55 @@ class JapaneseService {
         $str = str_replace(' ', '_', $str);
 
         return $str;
+
+    }
+
+
+
+    public static function doctu(int $lesson) {
+        $value = config('app.site_generate_mp3');
+        if (!defined('SITE_GENERATE_MP3')) {
+            define('SITE_GENERATE_MP3', $value);
+        }
+        if (!defined('EXTENTION')) {
+            define('EXTENTION', '.mp3');
+        }
+        if (!defined('TIME_SLEEP')) {
+            define('TIME_SLEEP', 5);
+        }
+
+        $MyGoogleSheet         = new MyGoogleSheet;
+        $MyGoogleSheet->lesson = 'Bai'.$lesson;
+
+        $values = $MyGoogleSheet->get();
+        @mkdir(storage_path('tmp_audio/voca/'));
+        @mkdir(storage_path('tmp_audio/voca/Lesson'.$lesson));
+
+        foreach ($values as $v) {
+            if (trim($v[5]) === '') {
+                continue;
+            }
+            if ((int) $v[2] !== 1) {
+                continue;
+            }
+            $f          = $v[0] . '_' . $v[3] . '_' . self::vn_to_str($v[5]);
+
+            $filepath   = storage_path('tmp_audio/voca/Lesson'.$lesson.'/'.$f . EXTENTION);
+            // dd($filepath);
+            $filepathVI = $f . '_vi' . EXTENTION;
+
+            $textJA = $v[1];
+            $textVI = $v[5];
+
+            if (!file_exists($filepath)) {
+                $url = SITE_GENERATE_MP3 . '/api/v1/utilities/get-mp3?text=' . urlencode($textJA) . '&lang=ja';
+                echo $textVI;
+                $content = file_get_contents($url);
+                file_put_contents($filepath, $content);
+                sleep(TIME_SLEEP);
+            }
+        }
+
 
     }
 }

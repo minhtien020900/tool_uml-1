@@ -12,7 +12,7 @@ class japanese extends Command
      *
      * @var string
      */
-    protected $signature = 'japanese';
+    protected $signature = 'doctubai {lesson?}';
 
     /**
      * The console command description.
@@ -38,6 +38,8 @@ class japanese extends Command
      */
     public function handle()
     {
-        JapaneseService::generate();
+        $lesson = (int)$this->argument('lesson')??1;
+        JapaneseService::doctu($lesson);
+        //JapaneseService::generate();
     }
 }
