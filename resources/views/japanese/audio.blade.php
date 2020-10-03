@@ -3,7 +3,7 @@
 
 @endsection
 @section('content')
-
+son
 
     <div class="text-center">
 
