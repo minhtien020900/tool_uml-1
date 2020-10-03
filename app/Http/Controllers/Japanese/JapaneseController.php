@@ -93,6 +93,11 @@ class JapaneseController extends Controller {
     public function audio(Request $request) {
         return view('japanese.audio');
     }
+    public function pullsource(Request $request) {
+        echo exec('git pull');
+        // return view('japanese.audio');
+    }
+
 
 
 }
