@@ -106,7 +106,6 @@ class JapaneseService {
     }
 
 
-
     public static function doctu(int $lesson) {
         $value = config('app.site_generate_mp3');
         if (!defined('SITE_GENERATE_MP3')) {
@@ -120,11 +119,11 @@ class JapaneseService {
         }
 
         $MyGoogleSheet         = new MyGoogleSheet;
-        $MyGoogleSheet->lesson = 'Bai'.$lesson;
+        $MyGoogleSheet->lesson = 'Bai' . $lesson;
 
         $values = $MyGoogleSheet->get();
         @mkdir(storage_path('tmp_audio/voca/'));
-        @mkdir(storage_path('tmp_audio/voca/Lesson'.$lesson));
+        @mkdir(storage_path('tmp_audio/voca/Lesson' . $lesson));
 
         foreach ($values as $v) {
             if (trim($v[5]) === '') {
@@ -133,9 +132,9 @@ class JapaneseService {
             if ((int) $v[2] !== 1) {
                 continue;
             }
-            $f          = $v[0] . '_' . $v[3] . '_' . self::vn_to_str($v[5]);
+            $f = $v[0] . '_' . $v[3] . '_' . self::vn_to_str($v[5]);
 
-            $filepath   = storage_path('tmp_audio/voca/Lesson'.$lesson.'/'.$f . EXTENTION);
+            $filepath = storage_path('tmp_audio/voca/Lesson' . $lesson . '/' . $f . EXTENTION);
             // dd($filepath);
             $filepathVI = $f . '_vi' . EXTENTION;
 
@@ -152,5 +151,51 @@ class JapaneseService {
         }
 
 
+    }
+
+    public static function doctuchem(int $lesson) {
+        $value = config('app.site_generate_mp3');
+        if (!defined('SITE_GENERATE_MP3')) {
+            define('SITE_GENERATE_MP3', $value);
+        }
+        if (!defined('EXTENTION')) {
+            define('EXTENTION', '.mp3');
+        }
+        if (!defined('TIME_SLEEP')) {
+            define('TIME_SLEEP', 5);
+        }
+        if (!defined('SHEETNAME')) {
+            define('SHEETNAME', 'tuchem');
+        }
+        if (!defined('FOLDERNAME')) {
+            define('FOLDERNAME', 'tuchem');
+        }
+        $MyGoogleSheet         = new MyGoogleSheet;
+        $MyGoogleSheet->lesson = SHEETNAME;
+
+        $values = $MyGoogleSheet->get();
+        @mkdir(storage_path('tmp_audio/' . FOLDERNAME . '/'));
+        @mkdir(storage_path('tmp_audio/' . FOLDERNAME . '/Lesson' . $lesson));
+
+        foreach ($values as $v) {
+
+            $f = self::vn_to_str($v[0]);
+
+            $filepath = storage_path('tmp_audio/' . FOLDERNAME . '/Lesson' . $lesson . '/' . $f . EXTENTION);
+
+            $textJA = $v[0];
+
+            if (!file_exists($filepath)) {
+                $url = SITE_GENERATE_MP3 . '/api/v1/utilities/get-mp3?text=' . urlencode($textJA) . '&lang=vi';
+                echo $textJA;
+                $content = file_get_contents($url);
+                if(strlen($filepath)>30){
+                    $filepath = storage_path('tmp_audio/' . FOLDERNAME . '/Lesson' . $lesson . '/' . md5($f) . EXTENTION);
+
+                }
+                file_put_contents($filepath, $content);
+                sleep(TIME_SLEEP);
+            }
+        }
     }
 }
