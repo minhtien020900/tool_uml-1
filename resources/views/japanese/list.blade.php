@@ -17,7 +17,7 @@
                         @foreach($vocabularies as $v)
                             <tr>
                                 <td><a>{!! $v[0] !!}</a></td>
-                                <td><a>{!! $v[1] !!}</a></td>
+                                <td ><div style="width: 300px;"><a>{!! $v[1] !!}</a></div></td>
                                 <td><a>{!! $v[3] !!}</a></td>
                                 <td><a>{!! $v[5] !!}</a></td>
                                 <td><img data-id="{!! $v[0] !!}" src="{!! $v[6]??'' !!}"></td>
