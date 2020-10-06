@@ -8,6 +8,7 @@ use App\Entity\Project;
 use App\Entity\Tag;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Japanese\MyGoogleSheet;
+use App\Services\VocabularyService;
 use Google_Client;
 use Google_Service_Sheets;
 use Illuminate\Http\Request;
@@ -42,6 +43,12 @@ class APIJapaneseController extends Controller {
         $data = [[time(),$text,$correct]];
         $rs = $google->set_sentence($range,$data);
         return $rs;
+    }
+    public function get_all_voca(){
+        return Cache::remember('get_all_voca',1000,function(){
+            return VocabularyService::getAll();
+        });
+
     }
 
 }

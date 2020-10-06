@@ -96,13 +96,6 @@ class JapaneseController extends Controller {
         return view('japanese.audio');
     }
     public function pullsource(Request $request) {
-        $data = [
-            'id'=>1,
-            'text' => '小見中'
-        ];
-
-        $v = new Vocabulary($data);
-        echo $v->getId() ;
         if (true) {
             $root_path = base_path();
             $process = new Process('git pull');
