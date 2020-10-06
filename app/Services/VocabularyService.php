@@ -7,6 +7,20 @@ use App\Http\Controllers\Japanese\ServiceGoogle;
 
 class VocabularyService {
 
+    const prefix_sheet = 'Bai';
+
+    public static function getByLesson(int $lesson) {
+        $s = new ServiceGoogle;
+        $s->getService();
+        $service       = $s->getService();
+        $spreadsheetId = config('vocabulary.idSheet');
+        $lesson        = self::prefix_sheet . $lesson;
+        $return[]      = self::sheetData($service, $spreadsheetId, $lesson);
+
+        return $return;
+
+    }
+
     public static function getAll() {
         $s = new ServiceGoogle;
         $s->getService();
@@ -40,7 +54,7 @@ class VocabularyService {
     }
 
     private static function ListSheet() {
-        return ['Bai1', 'Bai2', 'Bai3', 'Bai4'];
+        return [self::prefix_sheet . '1', self::prefix_sheet . '2', self::prefix_sheet . '3', self::prefix_sheet . '4'];
     }
 
     private static function sheetData(\Google_Service_Sheets $service, string $spreadsheetId, string $sheet) {
