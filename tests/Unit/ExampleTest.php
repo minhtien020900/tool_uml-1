@@ -16,6 +16,8 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
+        $this->markTestSkipped();
+        return;
         $s = new ServiceGoogle;
         $service = $s->getService();
         $spreadsheetId = '1PFurLYDNoZY70nbQhUmDbbtPGnSn8RWY1Bgz7GtlZdg';
