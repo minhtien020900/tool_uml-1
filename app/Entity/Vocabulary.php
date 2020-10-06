@@ -44,6 +44,72 @@ class Vocabulary {
      * @var mixed
      */
     private $audio;
+    /**
+     * @var mixed|null
+     */
+    private $test;
+    /**
+     * @var mixed|null
+     */
+    private $kanji;
+    /**
+     * @var mixed|null
+     */
+    private $type;
+
+    /**
+     * @return mixed|null
+     */
+    public function getKanji(): ?mixed {
+        return $this->kanji;
+    }
+
+    /**
+     * @param mixed|null $kanji
+     *
+     * @return Vocabulary
+     */
+    public function setKanji(?mixed $kanji): Vocabulary {
+        $this->kanji = $kanji;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getType(): ?mixed {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed|null $type
+     *
+     * @return Vocabulary
+     */
+    public function setType(?mixed $type): Vocabulary {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getTest(): ?mixed {
+        return $this->test;
+    }
+
+    /**
+     * @param mixed|null $test
+     *
+     * @return Vocabulary
+     */
+    public function setTest(?mixed $test): Vocabulary {
+        $this->test = $test;
+
+        return $this;
+    }
 
     /**
      * @return mixed
@@ -241,9 +307,13 @@ class Vocabulary {
         $this->audio        = $data['audio'] ?? null;
         $this->sample       = $data['sample'] ?? null;
         $this->similarsound = $data['similarsound'] ?? null;
+        $this->test         = $data['test'] ?? null;
+        $this->kanji         = $data['kanji'] ?? null;
+        $this->type         = $data['type'] ?? null;
+
     }
 
     public function toJson() {
-        return get_object_vars ($this);
+        return get_object_vars($this);
     }
 }

@@ -33,6 +33,9 @@ class VocabularyService {
             'audio'        => 7,
             'sample'       => 8,
             'similarsound' => 9,
+            'test'         => 11,
+            'kanji'        => 12,
+            'type'         => 13,
         ];
     }
 
@@ -61,6 +64,9 @@ class VocabularyService {
                 'audio'        => $v[$mapping['audio']] ?? null,
                 'sample'       => $v[$mapping['sample']] ?? null,
                 'similarsound' => $v[$mapping['similarsound']] ?? null,
+                'test'         => $v[$mapping['test']] ?? null,
+                'kanji'        => $v[$mapping['kanji']] ?? null,
+                'type'         => $v[$mapping['type']] ?? null,
             ];
 
             $result[] = new Vocabulary($data);
