@@ -242,4 +242,21 @@ class Vocabulary {
         $this->sample       = $data['sample'] ?? null;
         $this->similarsound = $data['similarsound'] ?? null;
     }
+
+    public function toJson() {
+        $data = [
+            'id'           => $this->id,
+            'text'         => $this->text,
+            'flag'         => $this->flag,
+            'romazi'       => $this->romazi,
+            'example'      => $this->example,
+            'meaning'      => $this->meaning,
+            'img'          => $this->img,
+            'audio'        => $this->audio,
+            'sample'       => $this->sample,
+            'similarsound' => $this->similarsound,
+        ];
+
+        return ($data);
+    }
 }

@@ -45,9 +45,15 @@ class APIJapaneseController extends Controller {
         return $rs;
     }
     public function get_all_voca(){
-        return Cache::remember('get_all_voca',1000,function(){
+        $result= Cache::remember('get_all_voca',1000,function(){
             return VocabularyService::getAll();
         });
+        foreach ($result as $v){
+            foreach ($v as $v2){
+                $r[] = $v2->toJson();
+            }
+        }
+        return $r;
 
     }
 

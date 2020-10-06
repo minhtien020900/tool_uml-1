@@ -63,7 +63,7 @@ class VocabularyService {
                 'similarsound' => $v[$mapping['similarsound']] ?? null,
             ];
 
-            $result[$sheet][] = new Vocabulary($data);
+            $result[] = new Vocabulary($data);
         }
 
         return $result;
