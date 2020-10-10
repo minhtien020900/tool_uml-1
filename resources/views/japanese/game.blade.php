@@ -18,13 +18,13 @@
             text-align: center;
             float: left;
             width: 200px;
-            height: 200px;
+            height: 270px;
             margin: 5px;
             box-shadow: 1px 1px 1px #ccc;
         }
 
         .ele-voca img {
-            max-height: 100%;
+            max-height: 90%;
             max-width: 100%;
         }
 
@@ -53,6 +53,7 @@
                         <div class="ele-voca" data-id="{!! $v[0] !!}">
 
                             <img data-id="{!! $v[0] !!}" src="{!! $v[6]??'' !!}">
+                            <div><strong>{{$v[1]}}</strong></div>
                             @if(isset($v[7]))
                                 <audio hidden controls id="audio_{!! $v[0] !!}" src="{!! $v[7]??'' !!}">
                                     <source src="{!! $v[7]??'' !!}" type="audio/mpeg">
