@@ -22,6 +22,7 @@
                     <a class="dropdown-item" href="/?l=2">Bài 2</a>
                     <a class="dropdown-item" href="/?l=3">Bài 3</a>
                     <a class="dropdown-item" href="/?l=4">Bài 4</a>
+                    <a class="dropdown-item" href="/?l=5">Bài 5</a>
                     <div class="dropdown-divider"></div>
                     <a class="d-none dropdown-item" href="#">Something else here</a>
                 </div>
@@ -35,6 +36,7 @@
                     <a class="dropdown-item" href="/game?l=2">Bài 2</a>
                     <a class="dropdown-item" href="/game?l=3">Bài 3</a>
                     <a class="dropdown-item" href="/game?l=4">Bài 4</a>
+                    <a class="dropdown-item" href="/game?l=5">Bài 5</a>
                     <div class="dropdown-divider"></div>
                     <a class="d-none dropdown-item" href="#">Something else here</a>
                 </div>
@@ -48,6 +50,7 @@
                     <a class="dropdown-item" href="/card?l=2">Bài 2</a>
                     <a class="dropdown-item" href="/card?l=3">Bài 3</a>
                     <a class="dropdown-item" href="/card?l=4">Bài 4</a>
+                    <a class="dropdown-item" href="/card?l=5">Bài 5</a>
                     <div class="dropdown-divider"></div>
                     <a class="d-none dropdown-item" href="#">Something else here</a>
                 </div>
@@ -61,6 +64,7 @@
                     <a class="dropdown-item" href="/test?l=2">Bài 2</a>
                     <a class="dropdown-item" href="/test?l=3">Bài 3</a>
                     <a class="dropdown-item" href="/test?l=4">Bài 4</a>
+                    <a class="dropdown-item" href="/test?l=5">Bài 5</a>
                     <div class="dropdown-divider"></div>
                     <a class="d-none dropdown-item" href="#">Something else here</a>
                 </div>
