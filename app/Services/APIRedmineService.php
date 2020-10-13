@@ -11,24 +11,22 @@ class APIRedmineService {
     const REVIEW   = 5;
     const FEATURE  = 2;
 
-    const TICKET_TESTING = 72478;
+    const TICKET_TESTING = '_';
 
     public static function createPackageTicket() {
         $m         = new self;
-        $res       = $m->createTicket('Test Issue_' . time(), self::TICKET_TESTING, self::FEATURE);
-        $parent_id = (json_decode($res)->issue->id);
-
-        $issues = [
-            $parent_id
+        $subject = [
+            // 'Support Browser Windows and Macos',
+            // 'Advance search',
+            // 'API Token management',
+            // 'Push notification',
+            // 'Message label.',
+            // 'Thread feature',
         ];
-        foreach ($issues as $issue) {
-            $parentId = $issue;
-            $m->createTicket('[] Understanding Spec', $parentId, self::ANALYTIC);
-            $m->createTicket('[] Coding', $parentId, self::CODING);
-            $m->createTicket('[] UT-Test', $parentId, self::UTTEST);
-            $m->createTicket('[] Release', $parentId, self::RELEASE);
-            $m->createTicket('[] Review', $parentId, self::REVIEW);
+        foreach ($subject as $s){
+            $m->createSingeTask($s);
         }
+
 
     }
 
@@ -57,6 +55,24 @@ class APIRedmineService {
         curl_close($curl);
 
         return $response;
+    }
+
+    private function createSingeTask(string $subject) {
+
+        $res       = $this->createTicket($subject, self::TICKET_TESTING, self::FEATURE);
+        $parent_id = (json_decode($res)->issue->id);
+
+        $issues = [
+            $parent_id
+        ];
+        foreach ($issues as $issue) {
+            $parentId = $issue;
+            $this->createTicket('[] Understanding Spec', $parentId, self::ANALYTIC);
+            $this->createTicket('[] Coding', $parentId, self::CODING);
+            $this->createTicket('[] UT-Test', $parentId, self::UTTEST);
+            $this->createTicket('[] Release', $parentId, self::RELEASE);
+            $this->createTicket('[] Review', $parentId, self::REVIEW);
+        }
     }
 
 }
