@@ -1,6 +1,9 @@
 @extends('layouts/app_blank_japanese')
 @section('header')
     <style>
+        .done img{
+            opacity: 0.3;
+        }
         #repeate {
             position: fixed;
             bottom: 0px;
@@ -45,15 +48,15 @@
     </style>
 @endsection
 @section('content')
-    <div class="">
+    <div class="" id="game-screen">
         <div class="">
             <div class="">
                 <div class="col-12">
                     @foreach($vocabularies as $v)
-                        <div class="ele-voca" data-id="{!! $v[0] !!}">
+                        <div class="ele-voca" data-id="{!! $v[0] !!}" data-hiragana="{{$v[1]}}">
 
                             <img data-id="{!! $v[0] !!}" src="{!! $v[6]??'' !!}">
-                            <div><strong>{{$v[1]}}</strong></div>
+                            <div class="hiragana"><strong>{{$v[1]}}</strong></div>
                             @if(isset($v[7]))
                                 <audio hidden controls id="audio_{!! $v[0] !!}" src="{!! $v[7]??'' !!}">
                                     <source src="{!! $v[7]??'' !!}" type="audio/mpeg">
@@ -69,7 +72,8 @@
     </div>
     <div id="repeate">
         <audio hidden controls id="audio-repeat">
-            <source src="http://dev.japanese.oop.vn/storage/japanese_audio/Bai2/9_jishiyo_Tu_dien.mp3" type="audio/mpeg" id="audio-repeat-source">
+            <source src="http://dev.japanese.oop.vn/storage/japanese_audio/Bai2/9_jishiyo_Tu_dien.mp3" type="audio/mpeg"
+                    id="audio-repeat-source">
             Your browser does not support the audio element.
         </audio>
         <button class="btn btn-primary" @click="repeat()">Repeat</button>
@@ -77,9 +81,12 @@
 @endsection
 @section('footer')
     <script>
+        function initgame() {
+            $('#text-check').focus();
+        }
 
-        $(document).ready()
-        {
+        $(document).ready(function () {
+            initgame();
             var voca = function (v) {
 
                 this.id = $(v).data('id');
@@ -111,26 +118,27 @@
 
             $('img').click(function () {
 
-                if($(this).data('id') === random.id){
+                if ($(this).data('id') === random.id) {
                     dungroi();
-                    flag_success= true;
+                    flag_success = true;
                     // alert('OK !!! ');
                     // random = vocalist[~~(vocalist.length * Math.random())]
                     // playRandom();
-                }else{
+                } else {
 
-                    $('#audio_' + $(this).data('id'))[0].play().then(()=>{})
+                    $('#audio_' + $(this).data('id'))[0].play().then(() => {
+                    })
                 }
             });
 
-            $("#repeate button").click(()=>{
+            $("#repeate button").click(() => {
                 playRandom();
             })
 
-            function playRandom(){
+            function playRandom() {
 
 
-                if(flag_success === true){
+                if (flag_success === true) {
                     random = vocalist[~~(vocalist.length * Math.random())]
                     flag_success = false;
                 }
@@ -139,20 +147,67 @@
                 $("#audio-repeat")[0].play();
             }
 
-            function dungroi(){
-                setTimeout(()=>{
+            function dungroi() {
+                setTimeout(() => {
                     $("#audio-repeat-source")[0].src = 'https://dm0qx8t0i9gc9.cloudfront.net/previews/audio/BsTwCwBHBjzwub4i4/audioblocks-successfully-organ-chord-achievement-4_BZHW4iOmYv8_NWM.mp3';
                     $("#audio-repeat")[0].load();
-                    $("#audio-repeat")[0].play().then(()=>{
+                    $("#audio-repeat")[0].play().then(() => {
                     });
                     flag_success = true;
-                },1000)
+                }, 1000)
                 playRandom();
-
-
             }
 
 
+        })
+
+
+        // Thêm nút vào bên trên
+        $('#game-screen').prepend('<button class="btn btn-primary" id="toggle-hiragana">Toggle hiragana</button>')
+        $('#game-screen').prepend('<input id="text-check">')
+        $(".hiragana").toggle();
+
+        $(document).on('click', '#toggle-hiragana', (e) => {
+            $(".hiragana").toggle();
+        })
+
+        function hidecorrect(selector) {
+            console.log(selector);
+            $(selector).addClass('done');
+            // selector.remove();
         }
+
+        function cleardata() {
+            $('#text-check').val('');
+        }
+
+        function textdungroi() {
+            setTimeout(() => {
+                $("#audio-repeat-source")[0].src = 'https://dm0qx8t0i9gc9.cloudfront.net/previews/audio/BsTwCwBHBjzwub4i4/audioblocks-successfully-organ-chord-achievement-4_BZHW4iOmYv8_NWM.mp3';
+                $("#audio-repeat")[0].load();
+                $("#audio-repeat")[0].play().then(() => {
+                });
+                flag_success = true;
+            }, 1000)
+        }
+
+        $(document).on('keyup', '#text-check', (e) => {
+            console.log(e.keyCode);
+            if (e.keyCode === 13) {
+                let m = $(".ele-voca").filter(function () {
+                    if ($(this).data('hiragana') === $('#text-check').val()) {
+                        return true;
+                    }
+                    return false;
+                })
+                if (m.length === 1) {
+                    textdungroi();
+                    hidecorrect(m[0]);
+                    cleardata();
+                }
+            }
+
+        })
+
     </script>
 @endsection
