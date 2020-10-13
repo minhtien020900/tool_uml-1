@@ -1,9 +1,10 @@
 @extends('layouts/app_blank_japanese')
 @section('header')
     <style>
-        .done img{
+        .done img {
             opacity: 0.3;
         }
+
         #repeate {
             position: fixed;
             bottom: 0px;
@@ -78,43 +79,79 @@
         </audio>
         <button class="btn btn-primary" @click="repeat()">Repeat</button>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Understood</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('footer')
     <script>
-        function initgame() {
-            $('#text-check').focus();
+        var voca = function (v) {
+
+            this.id = $(v).data('id');
+
+
+            if ($(v).children('img').length > 0) {
+                this.img = $(v).children('img')[0].getAttribute('src');
+            } else {
+                this.img = '';
+            }
+
+            if ($(v).children('audio').length > 0) {
+                this.audio = $(v).children('audio')[0].getAttribute('src');
+            } else {
+                this.audio = '';
+            }
+
+        };
+        voca.prototype.showss = function () {
         }
 
-        $(document).ready(function () {
-            initgame();
-            var voca = function (v) {
+        var game = function () {
+        };
+        game.prototype.showpopup = function () {
 
-                this.id = $(v).data('id');
+            $("#staticBackdrop").modal('toggle');
+        }
 
 
-                if ($(v).children('img').length > 0) {
-                    this.img = $(v).children('img')[0].getAttribute('src');
-                } else {
-                    this.img = '';
-                }
+        var mygame = new game();
 
-                if ($(v).children('audio').length > 0) {
-                    this.audio = $(v).children('audio')[0].getAttribute('src');
-                } else {
-                    this.audio = '';
-                }
+        function initgame() {
 
-            };
-            voca.prototype.showss = function () {
-            }
-            // let m = new voca();
-            // m.showss();
-            let vocalist = [];
+            $('#text-check').focus();
+
+            var vocalist = [];
             $(".ele-voca").each((k, v) => {
                 vocalist.push(new voca(v));
             });
             var random = vocalist[~~(vocalist.length * Math.random())]
             var flag_success = false;
+        }
+
+
+        $(document).ready(function () {
+
+            initgame();
+
 
             $('img').click(function () {
 
@@ -187,7 +224,7 @@
                 $("#audio-repeat")[0].play().then(() => {
                 });
                 flag_success = true;
-            }, 1000)
+            }, 5)
         }
 
         $(document).on('keyup', '#text-check', (e) => {
@@ -201,6 +238,7 @@
                 })
                 if (m.length === 1) {
                     textdungroi();
+                    mygame.showpopup();
                     hidecorrect(m[0]);
                     cleardata();
                 }

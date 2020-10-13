@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Http\Controllers\Japanese\ServiceGoogle;
+use App\Services\APIRedmineService;
 use Google_Service_Sheets_ValueRange;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
@@ -10,6 +11,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ExampleTest extends TestCase
 {
+
+    public function testCreateTask() {
+        APIRedmineService::createPackageTicket();
+    }
 
     public function testName() {
         $files = Storage::disk('s3')->allFiles();
