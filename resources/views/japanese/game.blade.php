@@ -161,10 +161,11 @@
 
         })
 
-
         // Thêm nút vào bên trên
         $('#game-screen').prepend('<button class="btn btn-primary" id="toggle-hiragana">Toggle hiragana</button>')
+
         $('#game-screen').prepend('<input id="text-check">')
+
         $(".hiragana").toggle();
 
         $(document).on('click', '#toggle-hiragana', (e) => {
@@ -172,9 +173,7 @@
         })
 
         function hidecorrect(selector) {
-            console.log(selector);
             $(selector).addClass('done');
-            // selector.remove();
         }
 
         function cleardata() {
