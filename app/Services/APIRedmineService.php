@@ -14,7 +14,7 @@ class APIRedmineService {
     const TICKET_TESTING = '_';
 
     public static function createPackageTicket() {
-        $m         = new self;
+        $m       = new self;
         $subject = [
             // 'Support Browser Windows and Macos',
             // 'Advance search',
@@ -23,7 +23,7 @@ class APIRedmineService {
             // 'Message label.',
             // 'Thread feature',
         ];
-        foreach ($subject as $s){
+        foreach ($subject as $s) {
             $m->createSingeTask($s);
         }
 
@@ -58,9 +58,9 @@ class APIRedmineService {
     }
 
     private function createSingeTask(string $subject) {
-
-        $res       = $this->createTicket($subject, self::TICKET_TESTING, self::FEATURE);
-        $parent_id = (json_decode($res)->issue->id);
+        $dataAllUserRedmine = \DBSeed\SampleUser::allUserInRedmine();
+        $res                = $this->createTicket($subject, self::TICKET_TESTING, self::FEATURE);
+        $parent_id          = (json_decode($res)->issue->id);
 
         $issues = [
             $parent_id
