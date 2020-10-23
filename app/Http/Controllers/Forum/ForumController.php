@@ -23,7 +23,7 @@ use function Jawira\PlantUml\encodep;
 class ForumController extends Controller {
 
     public function index(Request $request) {
-        echo 123;
+        return view('forum.index');
     }
 
 }
