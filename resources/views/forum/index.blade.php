@@ -16,7 +16,7 @@
 
     </ul>
     <div class="modal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Modal title</h5>
@@ -46,14 +46,22 @@
         $(document).on('click',"#contentThread span",function(){
             $(this).parent('div').remove();
         });
+
+        function renderDetailThread(v) {
+            return "<div>" +
+                "<strong>username: </strong>"+v.username+"<br>"+
+                "<div>"+v.html+"</div><hr>" +
+                "</div>";
+        }
+
         $(document).on('click',".detail-thread",function(){
             $.post('/api/get-detail-thread/'+$(this).data('id'), (data) => {
                 let string = '';
                 $.each(data,function(k,v){
-                    string += renderThread(v);
+                    string += renderDetailThread(v);
                 })
-                $('#contentThread').remove();
-                $(this).after('<div id="contentThread"><span>Close</span>'+string+'</div>');
+                $(".modal .modal-body").html(string);
+                $(".modal").modal();
             })
         });
 
