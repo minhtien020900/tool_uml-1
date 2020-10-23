@@ -46,7 +46,7 @@ Route::get('/test', 'Japanese\JapaneseController@test')->name('japanese.test');
 Route::get('/card', 'Japanese\JapaneseController@card')->name('japanese.card');
 Route::get('/audio', 'Japanese\JapaneseController@audio')->name('japanese.audio');
 Route::get('/pullsource', 'Japanese\JapaneseController@pullsource')->name('japanese.pullsource');
-
+Route::get('/forum', 'Forum\ForumController@index')->name('forum.index');
 Auth::routes();
 
 
