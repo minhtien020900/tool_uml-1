@@ -28,6 +28,24 @@ class ForumController extends Controller {
         $data['data'] = \App\Services\Forum::getParentForum();
         return view('forum.index',$data);
     }
+    public function forum(Request $request) {
+        $cat = $request->input('cat');
+        $dataCat = \App\Services\Forum::getDataCat($cat);
+        $dataThreadCat = \App\Services\Forum::getDataThreadCat($cat);
+        $data['dataCat'] = $dataCat;
+        $data['dataThreadCat'] = $dataThreadCat;
+        return view('forum.category',$data);
+    }
+    public function thread(Request $request) {
+        $threadid = $request->input('threadid');
+
+        $dataThreadData = \App\Services\Forum::getThreadData($threadid);
+
+        $data['dataThreadData'] = $dataThreadData;
+
+        return view('forum.thread',$data);
+    }
+
     public function getParentForum(Request $request) {
         return \App\Services\Forum::getParentForum();
     }

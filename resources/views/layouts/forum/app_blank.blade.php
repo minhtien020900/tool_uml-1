@@ -24,10 +24,9 @@
 </head>
 <body>
 <div id="app">
-    <main class="py-4">
+    <main class="py-4 container">
         <div class="row">
-
-            <div class="col-10" id="wrap-bottom">
+            <div class="col-12" id="wrap-bottom">
                 <div class='row'>
                     <div class='col-12'>
                         @yield('content')

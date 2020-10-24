@@ -40,13 +40,16 @@ Route::get('/404', function(){
 
 Route::prefix('japanese')->group(function () {
 });
-Route::get('/', 'Japanese\JapaneseController@index')->name('japanese.index');
+// Route::get('/', 'Japanese\JapaneseController@index')->name('japanese.index');
 Route::get('/game', 'Japanese\JapaneseController@game')->name('japanese.game');
 Route::get('/test', 'Japanese\JapaneseController@test')->name('japanese.test');
 Route::get('/card', 'Japanese\JapaneseController@card')->name('japanese.card');
 Route::get('/audio', 'Japanese\JapaneseController@audio')->name('japanese.audio');
 Route::get('/pullsource', 'Japanese\JapaneseController@pullsource')->name('japanese.pullsource');
-Route::get('/forum', 'Forum\ForumController@index')->name('forum.index');
+Route::get('/forum', 'Forum\ForumController@forum')->name('forum.index');
+Route::get('/thread', 'Forum\ForumController@thread')->name('forum.thread');
+
+Route::get('/', 'Forum\ForumController@index')->name('forum.index');
 Auth::routes();
 
 

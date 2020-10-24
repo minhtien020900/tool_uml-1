@@ -6,10 +6,11 @@
 
     <ul id="list-forum">
         @foreach($data as $d)
-            <li><a  class="link-forum" data-id="{{$d['data']->forumid}}" href="#">{{$d['data']->title}}</a></li>
+{{--            <li><a  class="link-forum" data-id="{{$d['data']->forumid}}" href="#">{{$d['data']->title}}</a></li>--}}
+            <li><a  class="link-forum-custom" data-id="{{$d['data']->forumid}}" href="/forum?cat={{$d['data']->forumid}}">{{$d['data']->title}}</a></li>
             <ul>
             @foreach($d['child'] as $c)
-                <li><a class="link-forum" data-id="{{$c->forumid}}" href="#">{{$c->title}}</a></li>
+                <li><a class="link-forum-custom" data-id="{{$c->forumid}}" href="/forum?cat={{$d['data']->forumid}}">{{$c->title}}</a></li>
             @endforeach
             </ul>
         @endforeach
