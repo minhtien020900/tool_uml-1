@@ -32,11 +32,14 @@ class ForumController extends Controller {
 
     public function forum(Request $request) {
         $cat                   = $request->input('cat');
-        $dataCat               = \App\Services\Forum::getDataCat($cat);
-        $dataThreadCat         = \App\Services\Forum::getDataThreadCat($cat);
-        $data['dataCat']       = $dataCat;
-        $data['dataThreadCat'] = $dataThreadCat;
 
+        $data = Cache::remember('forum_'.$cat, 10000, function () use ($cat) {
+            $dataCat               = \App\Services\Forum::getDataCat($cat);
+            $dataThreadCat         = \App\Services\Forum::getDataThreadCat($cat);
+            $data['dataCat']       = $dataCat;
+            $data['dataThreadCat'] = $dataThreadCat;
+            return $data;
+        });
         return view('forum.category', $data);
     }
 
