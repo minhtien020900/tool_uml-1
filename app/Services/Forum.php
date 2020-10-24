@@ -27,8 +27,8 @@ class Forum {
     }
 
     public static function getThreadData($threadid) {
-        $return['mainthread'] =  \App\Thread::where('threadid',$threadid)->get();
-        $return['commentthread'] = \App\Post::where('threadid',$threadid)->get();
+        $return['mainthread'] =  \App\Thread::where('threadid',$threadid)->orderBy('threadid')->get();
+        $return['commentthread'] = \App\Post::where('threadid',$threadid)->orderBy('postid')->get();
         return $return;
     }
 }

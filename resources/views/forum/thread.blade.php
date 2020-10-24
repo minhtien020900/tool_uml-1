@@ -13,7 +13,8 @@
 
     <div class="card">
         <div class="card-header">
-            Quote
+            <div class="font-weight-bold">{{$thread->username}}</div>
+            {{date('Y/m/d h:i:s',$thread->dateline)}}
         </div>
         <div class="card-body">
             {!! $thread->html !!}

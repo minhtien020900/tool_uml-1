@@ -19,7 +19,8 @@ class Post extends Model
     public function getHtmlAttribute(){
         //$bbcode = new ChrisKonnertz\BBCode\BBCode();
         $bbcode = new  BBCode();
-        $rendered = $bbcode->render($this->pagetext);
+        $pagetext =preg_replace('/\[(SIZE.+?)\]/','[SIZE]',$this->pagetext);
+        $rendered = $bbcode->render($pagetext);
         return $rendered;
         // Output: '<strong>Hello word!</strong>'
         return BBCode::convertToHtml($this->pagetext);
