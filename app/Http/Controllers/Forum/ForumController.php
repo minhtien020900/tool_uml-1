@@ -26,7 +26,9 @@ class ForumController extends Controller {
 
     public function index(Request $request) {
         $data['data'] = \App\Services\Forum::getParentForum();
-
+        $data['data'] = Cache::remember('index', 10000, function () {
+            return \App\Services\Forum::getParentForum();
+        });
         return view('forum.index', $data);
     }
 
