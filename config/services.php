@@ -43,5 +43,9 @@ return [
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
     ],
-
+    'google' => [
+        'client_id' => env('GOOGLE_ACCESS_KEY_ID','1053498517097-0jm5tulb3c5hppia56kggkd303evontv.apps.googleusercontent.com'),
+        'client_secret' => env('GOOGLE_SECRET_ACCESS_KEY','NnRmcvHYmw4zGwweupWeqF6g'),
+        'redirect' => env('GOOGLE_REDIRECT','https://local.cosplay.com.vn/callback'),
+    ],
 ];

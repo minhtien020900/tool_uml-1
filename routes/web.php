@@ -11,6 +11,13 @@
 |
 */
 
+use Laravel\Socialite\Facades\Socialite;
+
+Route::get('/login-google',function(){
+    return Socialite::driver('google')
+                    ->scopes(['openid', 'profile', 'email'])
+                    ->redirect();
+});
 //Route::get('/', 'Plantuml\ToolController@index')->name('homepage.index');
 Route::get('/home', 'Plantuml\ToolController@index')->name('homepage.h');
 
