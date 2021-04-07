@@ -12,7 +12,8 @@
         "fideloper/proxy": "^4.0",
         "jawira/plantuml-encoding": "^1.0",
         "laravel/framework": "5.8.*",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "package_examples/package_example_01": "dev-master"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -62,5 +63,10 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
+    },
+    "repositories": [{
+        "type": "vcs",
+        "url": "git@172.16.2.8:/home/git/package1.git"
     }
+    ]
 }

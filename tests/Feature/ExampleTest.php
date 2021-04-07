@@ -14,8 +14,8 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
+        dd($this->get('/info-from-package')->getStatusCode());
         $response = $this->get('/');
-
         $response->assertStatus(200);
     }
 }

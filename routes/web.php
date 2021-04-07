@@ -11,6 +11,8 @@
 |
 */
 
+Route::get("info-from-package", "MyController@demo");
+
 Route::get('/', 'Plantuml\ToolController@index')->name('homepage.index');
 Route::get('/home', 'Plantuml\ToolController@index')->name('homepage.h');
 
