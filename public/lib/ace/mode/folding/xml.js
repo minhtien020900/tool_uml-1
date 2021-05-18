@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2010, Ajax.org B.V.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  *     * Redistributions of source code must retain the above copyright
@@ -14,7 +14,7 @@
  *     * Neither the name of Ajax.org B.V. nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -43,7 +43,7 @@ var FoldMode = exports.FoldMode = function(voidElements, optionalEndTags) {
     this.optionalEndTags = oop.mixin({}, this.voidElements);
     if (optionalEndTags)
         oop.mixin(this.optionalEndTags, optionalEndTags);
-    
+
 };
 oop.inherits(FoldMode, BaseFoldMode);
 
@@ -78,7 +78,7 @@ function is(token, type) {
 
         return "start";
     };
-    
+
     this.getCommentFoldWidget = function(session, row) {
         if (/comment/.test(session.getState(row)) && /<!-/.test(session.getLine(row)))
             return "start";
@@ -165,7 +165,7 @@ function is(token, type) {
 
         return null;
     };
-    
+
     this._readTagBackward = function(iterator) {
         var token = iterator.getCurrentToken();
         if (!token)
@@ -190,35 +190,35 @@ function is(token, type) {
 
         return null;
     };
-    
+
     this._pop = function(stack, tag) {
         while (stack.length) {
-            
+
             var top = stack[stack.length-1];
             if (!tag || top.tagName == tag.tagName) {
                 return stack.pop();
             }
             else if (this.optionalEndTags.hasOwnProperty(top.tagName)) {
                 stack.pop();
-                continue;
+
             } else {
                 return null;
             }
         }
     };
-    
+
     this.getFoldWidgetRange = function(session, foldStyle, row) {
         var firstTag = this._getFirstTagInLine(session, row);
-        
+
         if (!firstTag) {
             return this.getCommentFoldWidget(session, row)
                 && session.getCommentFoldRange(row, session.getLine(row).length);
         }
-        
+
         var isBackward = firstTag.closing || firstTag.selfClosing;
         var stack = [];
         var tag;
-        
+
         if (!isBackward) {
             var iterator = new TokenIterator(session, row, firstTag.start.column);
             var start = {
@@ -236,7 +236,7 @@ function is(token, type) {
                     } else
                         continue;
                 }
-                
+
                 if (tag.closing) {
                     this._pop(stack, tag);
                     if (stack.length == 0)
@@ -253,7 +253,7 @@ function is(token, type) {
                 row: row,
                 column: firstTag.start.column
             };
-            
+
             while (tag = this._readTagBackward(iterator)) {
                 if (tag.selfClosing) {
                     if (!stack.length) {
@@ -263,7 +263,7 @@ function is(token, type) {
                     } else
                         continue;
                 }
-                
+
                 if (!tag.closing) {
                     this._pop(stack, tag);
                     if (stack.length == 0) {
@@ -278,7 +278,7 @@ function is(token, type) {
                 }
             }
         }
-        
+
     };
 
 }).call(FoldMode.prototype);

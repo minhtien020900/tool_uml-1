@@ -7,6 +7,7 @@ use App\Entity\PlantumlHistory;
 use App\Entity\Project;
 use App\Entity\Tag;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -89,7 +90,7 @@ class ToolController extends Controller {
             $p->project_id = (int) $request->input('project');
             $p->save();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             echo $e->getMessage();
             die;
 
@@ -110,7 +111,7 @@ class ToolController extends Controller {
         ]);
         try {
             if ($validator->fails()) {
-                throw new \Exception('validate');
+                throw new Exception('validate');
             }
 
             $hash = encodep($request->input('code'));
@@ -131,11 +132,11 @@ class ToolController extends Controller {
             } else {
                 $validator->getMessageBag()
                           ->add('authen', 'Don\'t have permission');
-                throw new \Exception('Don\'t have permission');
+                throw new Exception('Don\'t have permission');
             }
 
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             dd($e);
             return redirect(route('plantuml.edit', $request->input('id').'-'.$request->input('name')))
                 ->withErrors($validator)
@@ -159,7 +160,7 @@ class ToolController extends Controller {
             $plantuml_element = (Plantuml::where(['id' => $id])
                                          ->first());
             if ($plantuml_element == null) {
-                throw new \Exception('ádf');
+                throw new Exception('ádf');
             }
             //<editor-fold desc="Show by type">
             preg_match("/\.(png|svg|gif|jpg)$/", $name, $match);
@@ -179,7 +180,7 @@ class ToolController extends Controller {
                 break;
             }
             //</editor-fold>
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $im = file_get_contents(storage_path('app\imgs\none_response.png'));
 
             return response($im)->header('Content-type', 'image/png');

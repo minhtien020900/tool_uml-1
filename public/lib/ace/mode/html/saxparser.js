@@ -4021,7 +4021,7 @@ function TreeBuilder() {
 			index -= 1;
 			node = tree.openElements.item(index);
 			if (node.isForeign()) {
-				continue;
+
 			} else {
 				tree.insertionMode.processEndTag(name);
 				break;
@@ -5795,7 +5795,7 @@ module.exports={
 		"Unexpected end tag ({name}). Expected end of file.",
 	"unexpected-end-table-in-caption":
 		"Unexpected end table tag in caption. Generates implied end caption.",
-	"end-html-in-innerhtml": 
+	"end-html-in-innerhtml":
 		"Unexpected html end tag in inner html mode.",
 	"eof-in-table":
 		"Unexpected end of file. Expected table content.",
@@ -6034,7 +6034,7 @@ function Node(locator) {
 
 /**
  * Visit the node.
- * 
+ *
  * @param treeParser the visitor
  * @throws SAXException if stuff goes wrong
  */
@@ -6044,16 +6044,16 @@ Node.prototype.visit = function(treeParser) {
 
 /**
  * Revisit the node.
- * 
+ *
  * @param treeParser the visitor
  * @throws SAXException if stuff goes wrong
  */
 Node.prototype.revisit = function(treeParser) {
-	return;
+
 };
 
 
-// Subclass-specific accessors that are hoisted here to 
+// Subclass-specific accessors that are hoisted here to
 // avoid casting.
 
 /**
@@ -6140,7 +6140,7 @@ ParentNode.prototype.insertBetween = function(child, prev, next) {
 
 /**
  * Append a child to this node and return the child.
- * 
+ *
  * @param child the child to append.
  * @return <code>child</code>
  */
@@ -6231,7 +6231,7 @@ function Document (locator) {
 Document.prototype = Object.create(ParentNode.prototype);
 
 /**
- * 
+ *
  * @see nu.validator.saxtree.Node#visit(nu.validator.saxtree.TreeParser)
  */
 Document.prototype.visit = function(treeParser) {
@@ -6247,7 +6247,7 @@ Document.prototype.revisit = function(treeParser) {
 
 /**
  * A document fragment.
- * 
+ *
  * @version $Id$
  * @author hsivonen
  */
@@ -6262,7 +6262,7 @@ function DocumentFragment() {
 
 DocumentFragment.prototype = Object.create(ParentNode.prototype);
 /**
- * 
+ *
  * @see nu.validator.saxtree.Node#visit(nu.validator.saxtree.TreeParser)
  */
 DocumentFragment.prototype.visit = function(treeParser) {
@@ -6287,7 +6287,7 @@ function Element(locator, uri, localName, qName, atts, prefixMappings) {
 Element.prototype = Object.create(ParentNode.prototype);
 
 /**
- * 
+ *
  * @see nu.validator.saxtree.Node#visit(nu.validator.saxtree.TreeParser)
  */
 Element.prototype.visit = function(treeParser) {
@@ -6328,7 +6328,7 @@ function Characters(locator, data){
 Characters.prototype = Object.create(Node.prototype);
 
 /**
- * 
+ *
  * @see nu.validator.saxtree.Node#visit(nu.validator.saxtree.TreeParser)
  */
 Characters.prototype.visit = function (treeParser) {
@@ -6350,7 +6350,7 @@ function IgnorableWhitespace(locator, data) {
 IgnorableWhitespace.prototype = Object.create(Node.prototype);
 
 /**
- * 
+ *
  * @see nu.validator.saxtree.Node#visit(nu.validator.saxtree.TreeParser)
  */
 IgnorableWhitespace.prototype.visit = function(treeParser) {
@@ -6359,7 +6359,7 @@ IgnorableWhitespace.prototype.visit = function(treeParser) {
 
 /**
  * A comment.
- * 
+ *
  * @version $Id$
  * @author hsivonen
  */
@@ -6380,7 +6380,7 @@ function Comment(locator, data) {
 Comment.prototype = Object.create(Node.prototype);
 
 /**
- * 
+ *
  * @see nu.validator.saxtree.Node#visit(nu.validator.saxtree.TreeParser)
  */
 Comment.prototype.visit = function(treeParser) {
@@ -6411,7 +6411,7 @@ CDATA.prototype.visit = function(treeParser) {
 };
 
 /**
- * 
+ *
  * @throws SAXException if things go wrong
  * @see nu.validator.saxtree.Node#revisit(nu.validator.saxtree.TreeParser)
  */
@@ -6439,7 +6439,7 @@ function Entity(name) {
 Entity.prototype = Object.create(ParentNode.prototype);
 
 /**
- * 
+ *
  * @see nu.validator.saxtree.Node#visit(nu.validator.saxtree.TreeParser)
  */
 Entity.prototype.visit = function(treeParser) {
@@ -6474,7 +6474,7 @@ function SkippedEntity(name) {
 SkippedEntity.prototype = Object.create(Node.prototype);
 
 /**
- * 
+ *
  * @see nu.validator.saxtree.Node#visit(nu.validator.saxtree.TreeParser)
  */
 SkippedEntity.prototype.visit = function(treeParser) {
@@ -6512,7 +6512,7 @@ function ProcessingInstruction(target, data) {
 ProcessingInstruction.prototype = Object.create(Node.prototype);
 
 /**
- * 
+ *
  * @see nu.validator.saxtree.Node#visit(nu.validator.saxtree.TreeParser)
  */
 ProcessingInstruction.prototype.visit = function(treeParser) {
@@ -6520,7 +6520,7 @@ ProcessingInstruction.prototype.visit = function(treeParser) {
 };
 
 /**
- * 
+ *
  * @see nu.validator.saxtree.Node#getNodeType()
  */
 ProcessingInstruction.prototype.getNodeType = function() {
@@ -6545,7 +6545,7 @@ function DTD(name, publicIdentifier, systemIdentifier) {
 DTD.prototype = Object.create(ParentNode.prototype);
 
 /**
- * 
+ *
  * @see nu.validator.saxtree.Node#visit(nu.validator.saxtree.TreeParser)
  */
 DTD.prototype.visit = function(treeParser) {
@@ -6572,7 +6572,7 @@ exports.SAXTreeBuilder = SAXTreeBuilder;
 
 /**
  * The constructor.
- * 
+ *
  * @param contentHandler
  *            must not be <code>null</code>
  * @param lexicalHandler
@@ -6610,7 +6610,7 @@ function TreeParser(contentHandler, lexicalHandler){
  * Causes SAX events for the tree rooted at the argument to be emitted.
  * <code>startDocument()</code> and <code>endDocument()</code> are only
  * emitted for a <code>Document</code> node.
- * 
+ *
  * @param node
  *            the root
  * @throws SAXException

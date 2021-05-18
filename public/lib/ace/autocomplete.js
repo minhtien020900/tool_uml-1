@@ -87,7 +87,7 @@ var Autocomplete = function() {
         this.popup.setData(this.completions.filtered, this.completions.filterText);
 
         editor.keyBinding.addKeyboardHandler(this.keyboardHandler);
-        
+
         var renderer = editor.renderer;
         this.popup.setRow(this.autoSelect ? 0 : -1);
         if (!keepPopupPosition) {
@@ -405,7 +405,7 @@ var Autocomplete = function() {
         if (el.parentNode)
             el.parentNode.removeChild(el);
     };
-    
+
     this.onTooltipClick = function(e) {
         var a = e.target;
         while (a && a != this.tooltipNode) {
@@ -450,7 +450,7 @@ var FilteredList = function(array, filterText) {
         this.filterText = str;
         matches = this.filterCompletions(matches, this.filterText);
         matches = matches.sort(function(a, b) {
-            return b.exactMatch - a.exactMatch || b.$score - a.$score 
+            return b.exactMatch - a.exactMatch || b.$score - a.$score
                 || (a.caption || a.value) < (b.caption || b.value);
         });
 
@@ -479,7 +479,7 @@ var FilteredList = function(array, filterText) {
 
             if (this.exactMatch) {
                 if (needle !== caption.substr(0, needle.length))
-                    continue loop;
+                    continue;
             } else {
                 /**
                  * It is for situation then, for example, we find some like 'tab' in item.value="Check the table"

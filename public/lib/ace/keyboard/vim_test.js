@@ -79,7 +79,7 @@ function expectFail(fn, silent) {
         fn();
     } catch(expected) {
         return;
-    };
+    }
     if (!silent)
         throw new Error("Expected to throw an error");
 }

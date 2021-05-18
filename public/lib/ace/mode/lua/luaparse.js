@@ -1568,7 +1568,7 @@ define(function(require, exports, module) {
 
           parameters.push(parameter);
 
-          if (consume(',')) continue;
+          if (consume(','))
           else if (consume(')')) break;
         }
         // No arguments are allowed after a vararg.

@@ -20,7 +20,6 @@ Route::prefix('plantuml')->group(function () {
     Route::get('/show_url/{name}', 'Plantuml\ToolController@show_url')->name('plantuml.show');
 });
 
-
 Route::prefix('plantuml')->middleware('auth')->group(function () {
     Route::post('/save-category', 'Plantuml\CategoryController@store')->name('category.store');
     Route::get('project/{name}', 'Plantuml\ToolController@showproject')->name('project.show');
@@ -33,6 +32,10 @@ Route::prefix('plantuml')->middleware('auth')->group(function () {
     Route::put('/{name}', 'Plantuml\ToolController@update')->name('plantuml.update');
     Route::get('/byuser', 'Plantuml\UserumlController@index')->name('plantuml.byuser');
 });
+
+//Route login google
+Route::get('auth/{driver}','Socialite\SocialiteController@redirectToProvider')->name('login.provider');
+Route::get('auth/{driver}/callback','Socialite\SocialiteController@handleProviderCallback')->name('login.provider.callback');
 
 Route::get('/404', function(){
     return view('404');

@@ -269,7 +269,7 @@ EditSession.$uid = 0;
             }
             this.$undoManager.add(delta, this.mergeUndoDeltas);
             this.mergeUndoDeltas = true;
-            
+
             this.$informUndoManager.schedule();
         }
 
@@ -374,10 +374,10 @@ EditSession.$uid = 0;
      **/
     this.setUndoManager = function(undoManager) {
         this.$undoManager = undoManager;
-        
+
         if (this.$informUndoManager)
             this.$informUndoManager.cancel();
-        
+
         if (undoManager) {
             var self = this;
             undoManager.addSession(this);
@@ -398,7 +398,7 @@ EditSession.$uid = 0;
         if (this.$syncInformUndoManager)
             this.$syncInformUndoManager();
     };
-    
+
     this.$defaultUndoManager = {
         undo: function() {},
         redo: function() {},
@@ -894,7 +894,7 @@ EditSession.$uid = 0;
     this.$onChangeMode = function(mode, $isPlaceholder) {
         if (!$isPlaceholder)
             this.$modeId = mode.$id;
-        if (this.$mode === mode) 
+        if (this.$mode === mode)
             return;
 
         this.$mode = mode;
@@ -926,7 +926,7 @@ EditSession.$uid = 0;
         this.tokenRe = mode.tokenRe;
         this.nonTokenRe = mode.nonTokenRe;
 
-        
+
         if (!$isPlaceholder) {
             // experimental method, used by c9 findiniles
             if (mode.attachToSession)
@@ -969,7 +969,7 @@ EditSession.$uid = 0;
      *
      **/
     this.setScrollTop = function(scrollTop) {
-        // TODO: should we force integer lineheight instead? scrollTop = Math.round(scrollTop); 
+        // TODO: should we force integer lineheight instead? scrollTop = Math.round(scrollTop);
         if (this.$scrollTop === scrollTop || isNaN(scrollTop))
             return;
 
@@ -1012,11 +1012,11 @@ EditSession.$uid = 0;
      **/
     this.getScreenWidth = function() {
         this.$computeWidth();
-        if (this.lineWidgets) 
+        if (this.lineWidgets)
             return Math.max(this.getLineWidgetMaxWidth(), this.screenWidth);
         return this.screenWidth;
     };
-    
+
     this.getLineWidgetMaxWidth = function() {
         if (this.lineWidgetsWidth != null) return this.lineWidgetsWidth;
         var width = 0;
@@ -1124,7 +1124,7 @@ EditSession.$uid = 0;
     this.remove = function(range) {
         return this.doc.remove(range);
     };
-    
+
     /**
      * Removes a range of full lines. This method also triggers the `'change'` event.
      * @param {Number} firstRow The first row to be removed
@@ -1198,7 +1198,7 @@ EditSession.$uid = 0;
     /**
      * Enables or disables highlighting of the range where an undo occurred.
      * @param {Boolean} enable If `true`, selects the range of the reinserted change
-     *      
+     *
      **/
     this.setUndoSelect = function(enable) {
         this.$undoSelect = enable;
@@ -1225,7 +1225,7 @@ EditSession.$uid = 0;
                 }
                 continue;
             }
-            
+
             if (isInsert(delta)) {
                 point = delta.start;
                 if (range.compare(point.row, point.column) == -1) {
@@ -1385,7 +1385,7 @@ EditSession.$uid = 0;
             x.end.row += diff;
             return x;
         });
-        
+
         var lines = dir == 0
             ? this.doc.getLines(firstRow, lastRow)
             : this.doc.removeFullLines(firstRow, lastRow);
@@ -1586,7 +1586,7 @@ EditSession.$uid = 0;
     this.getWrapLimit = function() {
         return this.$wrapLimit;
     };
-    
+
     /**
      * Sets the line length for soft wrap in the editor. Lines will break
      *  at a minimum of the given length minus 20 chars and at a maximum
@@ -1596,7 +1596,7 @@ EditSession.$uid = 0;
     this.setWrapLimit = function (limit) {
         this.setWrapLimitRange(limit, limit);
     };
-    
+
     /**
      * Returns an object that defines the minimum and maximum of the wrap limit; it looks something like this:
      *
@@ -1621,7 +1621,7 @@ EditSession.$uid = 0;
         var lastRow = end.row;
         var len = lastRow - firstRow;
         var removedFolds = null;
-        
+
         this.$updating = true;
         if (len != 0) {
             if (action === "remove") {
@@ -1807,7 +1807,7 @@ EditSession.$uid = 0;
                     else if (token == TAB)
                         indentation += tabSize;
                     else if (token == TAB_SPACE)
-                        continue;
+
                     else
                         break;
                 }
@@ -2014,7 +2014,7 @@ EditSession.$uid = 0;
     this.getRowLength = function(row) {
         if (this.lineWidgets)
             var h = this.lineWidgets[row] && this.lineWidgets[row].rowCount || 0;
-        else 
+        else
             h = 0;
         if (!this.$useWrapMode || !this.$wrapData[row]) {
             return 1 + h;
@@ -2365,7 +2365,7 @@ EditSession.$uid = 0;
 
         return screenRows;
     };
-    
+
     /**
      * @private
      *
@@ -2378,7 +2378,7 @@ EditSession.$uid = 0;
             if (!maxScreenColumn)
                 maxScreenColumn = Infinity;
             screenColumn = screenColumn || 0;
-            
+
             var c, column;
             for (column = 0; column < str.length; column++) {
                 c = str.charAt(column);
@@ -2392,11 +2392,11 @@ EditSession.$uid = 0;
                     break;
                 }
             }
-            
+
             return [screenColumn, column];
         };
     };
-    
+
     this.destroy = function() {
         if (this.bgTokenizer) {
             this.bgTokenizer.setDocument(null);
@@ -2486,7 +2486,7 @@ config.defineOptions(EditSession.prototype, "session", {
             return "off";
         },
         handlesSet: true
-    },    
+    },
     wrapMethod: {
         // code|text|auto
         set: function(val) {
@@ -2510,7 +2510,7 @@ config.defineOptions(EditSession.prototype, "session", {
                 this.setUseWrapMode(true);
             }
         },
-        initialValue: true 
+        initialValue: true
     },
     firstLineNumber: {
         set: function() {this._signal("changeBreakpoint");},

@@ -85,7 +85,7 @@ function DOMException(code, message) {
 	error.code = code;
 	if(message) this.message = this.message + ": " + message;
 	return error;
-};
+}
 DOMException.prototype = Error.prototype;
 copy(ExceptionCode,DOMException)
 /**
@@ -94,7 +94,7 @@ copy(ExceptionCode,DOMException)
  * The items in the NodeList are accessible via an integral index, starting from 0.
  */
 function NodeList() {
-};
+}
 NodeList.prototype = {
 	/**
 	 * The number of nodes in the list. The range of valid child node indices is 0 to length-1 inclusive.
@@ -141,7 +141,7 @@ _extends(LiveNodeList,NodeList);
  * used for attributes or DocumentType entities
  */
 function NamedNodeMap() {
-};
+}
 
 function _findNodeIndex(list,node){
 	var i = list.length;
@@ -255,7 +255,7 @@ function DOMImplementation(/* Object */ features) {
 			 this._features = features[feature];
 		}
 	}
-};
+}
 
 DOMImplementation.prototype = {
 	hasFeature: function(/* string */ feature, /* string */ version) {
@@ -304,7 +304,7 @@ DOMImplementation.prototype = {
  */
 
 function Node() {
-};
+}
 
 Node.prototype = {
 	firstChild : null,
@@ -706,7 +706,7 @@ _extends(Document,Node);
 
 function Element() {
 	this._nsMap = {};
-};
+}
 Element.prototype = {
 	nodeType : ELEMENT_NODE,
 	hasAttribute : function(name){
@@ -797,13 +797,13 @@ Document.prototype.getElementsByTagNameNS = Element.prototype.getElementsByTagNa
 
 _extends(Element,Node);
 function Attr() {
-};
+}
 Attr.prototype.nodeType = ATTRIBUTE_NODE;
 _extends(Attr,Node);
 
 
 function CharacterData() {
-};
+}
 CharacterData.prototype = {
 	data : '',
 	substringData : function(offset, count) {
@@ -836,7 +836,7 @@ CharacterData.prototype = {
 }
 _extends(CharacterData,Node);
 function Text() {
-};
+}
 Text.prototype = {
 	nodeName : "#text",
 	nodeType : TEXT_NODE,
@@ -855,7 +855,7 @@ Text.prototype = {
 }
 _extends(Text,CharacterData);
 function Comment() {
-};
+}
 Comment.prototype = {
 	nodeName : "#comment",
 	nodeType : COMMENT_NODE
@@ -863,7 +863,7 @@ Comment.prototype = {
 _extends(Comment,CharacterData);
 
 function CDATASection() {
-};
+}
 CDATASection.prototype = {
 	nodeName : "#cdata-section",
 	nodeType : CDATA_SECTION_NODE

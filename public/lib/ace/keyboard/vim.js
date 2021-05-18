@@ -139,10 +139,10 @@ define(function(require, exports, module) {
     TextModeTokenRe.lastIndex = 0;
     return TextModeTokenRe.test(ch);
   };
-  
+
 (function() {
   oop.implement(CodeMirror.prototype, EventEmitter);
-  
+
   this.destroy = function() {
     this.ace.off('change', this.onChange);
     this.ace.off('changeSelection', this.onSelectionChange);
@@ -262,7 +262,7 @@ define(function(require, exports, module) {
       r.cursor = Range.comparePoints(r.start, head) ? r.end : r.start;
       return r;
     });
-    
+
     if (this.ace.inVirtualSelectionMode) {
       this.ace.selection.fromOrientedRange(ranges[0]);
       return;
@@ -305,7 +305,7 @@ define(function(require, exports, module) {
     var rowShift = (end.row - start.row) * (isInsert ? 1 : -1);
     var colShift = (end.column - start.column) * (isInsert ? 1 : -1);
     if (isInsert) end = start;
-    
+
     for (var i in this.marks) {
       var point = this.marks[i];
       var cmp = Range.comparePoints(point, start);
@@ -778,12 +778,12 @@ dom.importCssString(".normal-mode .ace_cursor{\
         inp.value = newVal;
       } else {
         if (closed) return;
-        
+
         if (newVal && newVal.type == "blur") {
           if (document.activeElement === inp)
             return;
         }
-        
+
         me.state.dialog = null;
         closed = true;
         dialog.parentNode.removeChild(dialog);
@@ -857,7 +857,7 @@ dom.importCssString(".normal-mode .ace_cursor{\
   });
 })();
 
-  
+
   var defaultKeymap = [
     // Key to key mapping. This goes first to make it possible to override
     // existing mappings.
@@ -1267,7 +1267,7 @@ dom.importCssString(".normal-mode .ace_cursor{\
         if (scope !== 'local') {
           return option.callback();
         }
-        return;
+
       } else {
         var local = (scope !== 'global') && (cm && cm.state.vim.options[name]);
         return (local || (scope !== 'local') && option || {}).value;
@@ -4136,7 +4136,7 @@ dom.importCssString(".normal-mode .ace_cursor{\
               if (wordStart == cur.ch && lineNum == cur.line &&
                   wordEnd == wordStart + dir) {
                 // We started at the end of a word. Find the next one.
-                continue;
+
               } else {
                 return {
                   from: Math.min(wordStart, wordEnd + 1),
@@ -4481,11 +4481,11 @@ dom.importCssString(".normal-mode .ace_cursor{\
         onClose(prompt(shortText, ''));
       }
     }
-    
+
     function splitBySlash(argString) {
       return splitBySeparator(argString, '/');
     }
-  
+
     function findUnescapedSlashes(argString) {
       return findUnescapedSeparators(argString, '/');
     }
@@ -5083,7 +5083,7 @@ dom.importCssString(".normal-mode .ace_cursor{\
           var commandName = lhs.substring(1);
           if (this.commandMap_[commandName] && this.commandMap_[commandName].user) {
             delete this.commandMap_[commandName];
-            return;
+
           }
         } else {
           // Key to Ex or key to key mapping
@@ -6069,7 +6069,7 @@ dom.importCssString(".normal-mode .ace_cursor{\
     } else if (cm.ace.inMultiSelectMode && vim.visualBlock) {
        vim.wasInVisualBlock = true;
     }
-    
+
     if (key == '<Esc>' && !vim.insertMode && !vim.visualMode && cm.ace.inMultiSelectMode) {
       cm.ace.exitMultiSelectMode();
     } else if (visualBlock || !cm.ace.inMultiSelectMode || cm.ace.inVirtualSelectionMode) {
@@ -6088,7 +6088,7 @@ dom.importCssString(".normal-mode .ace_cursor{\
           anchor = offsetCursor(anchor, 0, anchorOffset);
           cm.state.vim.sel.head = head;
           cm.state.vim.sel.anchor = anchor;
-          
+
           isHandled = handleKey(cm, key, origin);
           sel.$desiredColumn = cm.state.vim.lastHPos == -1 ? null : cm.state.vim.lastHPos;
           if (cm.virtualSelectionMode()) {
@@ -6114,12 +6114,12 @@ dom.importCssString(".normal-mode .ace_cursor{\
       var top = pixelPos.top;
       var left = pixelPos.left;
       if (!vim.insertMode) {
-        var isbackwards = !sel.cursor 
+        var isbackwards = !sel.cursor
             ? session.selection.isBackwards() || session.selection.isEmpty()
             : Range.comparePoints(sel.cursor, sel.start) <= 0;
         if (!isbackwards && left > w)
           left -= w;
-      }     
+      }
       if (!vim.insertMode && vim.status) {
         h = h / 2;
         top += h;
@@ -6133,7 +6133,7 @@ dom.importCssString(".normal-mode .ace_cursor{\
       var cm = editor.state.cm;
       var vim = getVim(cm);
       if (keyCode == -1) return;
-      
+
       // in non-insert mode we try to find the ascii key corresponding to the text in textarea
       // this is needed because in languages that use latin alphabet we want to get the key that browser sends to the textarea
       // and in non
@@ -6164,7 +6164,7 @@ dom.importCssString(".normal-mode .ace_cursor{\
           data.inputChar = data.inputKey = null;
         }
       }
-      
+
       // ctrl-c is special it both exits mode and copies text
       if (key == "c" && hashId == 1) { // key == "ctrl-c"
         if (!useragent.isMac && editor.getCopyText()) {
@@ -6174,13 +6174,13 @@ dom.importCssString(".normal-mode .ace_cursor{\
           return {command: "null", passEvent: true};
         }
       }
-      
+
       if (key == "esc" && !vim.insertMode && !vim.visualMode && !cm.ace.inMultiSelectMode) {
         var searchState = getSearchState(cm);
         var overlay = searchState.getOverlay();
         if (overlay) cm.removeOverlay(overlay);
       }
-      
+
       if (hashId == -1 || hashId & 1 || hashId === 0 && key.length > 1) {
         var insertMode = vim.insertMode;
         var name = lookupKey(hashId, key, e || {});
@@ -6279,7 +6279,7 @@ dom.importCssString(".normal-mode .ace_cursor{\
     { keys: 'zA', type: 'action', action: 'fold', actionArgs: { toggle: true, all: true } },
     { keys: 'zf', type: 'action', action: 'fold', actionArgs: { open: true, all: true } },
     { keys: 'zd', type: 'action', action: 'fold', actionArgs: { open: true, all: true } },
-    
+
     { keys: '<C-A-k>', type: 'action', action: 'aceCommand', actionArgs: { name: "addCursorAbove" } },
     { keys: '<C-A-j>', type: 'action', action: 'aceCommand', actionArgs: { name: "addCursorBelow" } },
     { keys: '<C-A-S-k>', type: 'action', action: 'aceCommand', actionArgs: { name: "addCursorAboveSkipCurrent" } },
@@ -6312,6 +6312,6 @@ dom.importCssString(".normal-mode .ace_cursor{\
   exports.handler.defaultKeymap = defaultKeymap;
   exports.handler.actions = actions;
   exports.Vim = Vim;
-  
+
   Vim.map("Y", "yy", "normal");
 });

@@ -79,3 +79,44 @@ li.active {
     background: #ccc;
     text-decoration: none;
 }
+.login{
+ width: 100%;
+}
+#forgot-pass{
+    float: right;
+}
+.remember-account{
+    display: flex;
+    align-items: center;
+}
+#form-remember{
+    margin-left: 20px;
+}
+.sign-in-provider{
+    position: relative;
+    text-align: left;
+
+    margin-left:0px ;
+    margin-right: 0px ;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 1px solid #e2e7eb;
+    background-color: #fff;
+    border-radius: 5px;
+
+}
+.icon-provider{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    line-height: 36px;
+    font-size: 1.1em;
+    text-align: center;
+    border-right: 1px solid #d8dde4
+}
+.google-icon{
+    color:#dd4b39 ;
+}
+

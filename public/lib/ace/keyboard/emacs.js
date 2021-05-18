@@ -316,7 +316,7 @@ exports.handler.handleKeyboard = function(data, hashId, key, keyCode) {
 
     if (!command.readOnly && editor.emacsMark())
         editor.setEmacsMark(null);
-        
+
     if (data.count) {
         var count = data.count;
         data.count = 0;
@@ -477,7 +477,7 @@ exports.handler.addCommands({
             if (!mark) {
                 rangePositions.forEach(function(pos) { editor.pushEmacsMark(pos); });
                 editor.setEmacsMark(rangePositions[rangePositions.length-1]);
-                return;
+
             }
 
             // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -536,7 +536,7 @@ exports.handler.addCommands({
         var line = editor.session.getLine(range.start.row);
         range.end.column = line.length;
         line = line.substr(range.start.column);
-        
+
         var foldLine = editor.session.getFoldLine(range.start.row);
         if (foldLine && range.end.row != foldLine.end.row) {
             range.end.row = foldLine.end.row;
